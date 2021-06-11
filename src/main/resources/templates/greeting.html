@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+
+<form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">
+    <h3>Регистрация</h3>
+    <p>_________: <input type="text" th:field="*{name}" /></p>
+    <p>_____Id____: <input type="text" th:field="*{role}" /></p>
+    <p>_____Id____: <input type="text" th:field="*{number}" /></p>
+    <p>_____Id____: <input type="text" th:field="*{login}" /></p>
+    <p>_____Id____: <input type="text" th:field="*{password}" /></p>
+    <p>_____Id____: <input type="text" th:field="*{address}" /></p>
+    <input type="submit" value="Зарегестрироваться">
+</form>
+</body>
+</html>
