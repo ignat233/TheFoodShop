@@ -1,38 +1,35 @@
 package com.netcraker.controller;
 
 
-
 import com.netcraker.model.User;
-//import com.netcraker.repository.IUserRepository;
+import com.netcraker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+
 
 @Controller
 public class UserController {
 
-
-//    @Autowired
-//    private IUserRepository userRepository;
-
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/greeting")
-    public String hello(Model model){
-
-        model.addAttribute("greeting", new User());
-
+    public String hello(Model model) {
+        Iterable<User> users = userService.findAll();
+        model.addAttribute("users", users);
         return "greeting";
     }
+}
 
 //    @PostMapping("/post")
 //    public String post(@ModelAttribute User user)
 
 
 
-}
+//}
 
 
 //    @PostMapping("/greeting")
