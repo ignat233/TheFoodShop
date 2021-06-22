@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+
+
+<h3>Меню</h3>
+<table>
+        <form action="/basket" method="get">
+            <p><input type="submit" name="countInBasket"  value="Корзина"></p>
+        </form>
+
+    <form  method="get">
+        <tr>
+            <th>Название</th>
+            <th>цена</th>
+            <th></th>
+        </tr>
+        <tr  th:each="product : ${product}">
+            <td th:text="${product.name}"></td>
+            <td th:text="${product.price}"></td>
+            <td>
+<!--                <input type="number" name="count" min="0" value="1">-->
+                <input type="submit"  value="Добавить товар"></td>
+
+        </tr>
+    </form>
+    <div th:if="${param.error}">
+        Invalid username and password.
+    </div>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <div style="float:right; margin-right:10px;">
+    <form th:action="@{/login}" method="get">
+        <div><label> User Name : <input type="text" name="username"/> </label></div>
+        <div><label> Password: <input type="password" name="password"/> </label></div>
+        <div><input type="submit" value="Войти"/></div>
+    </form>
+        <a href="/register">Зарегистрироваться</a>
+    </div>
+</table>
+</body>
+</html>

@@ -7,15 +7,29 @@
 <body>
 
 
-<form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">
-    <h3>Регистрация</h3>
-    <p>_________: <input type="text" th:field="*{name}" /></p>
-    <p>_____Id____: <input type="text" th:field="*{role}" /></p>
-    <p>_____Id____: <input type="text" th:field="*{number}" /></p>
-    <p>_____Id____: <input type="text" th:field="*{login}" /></p>
-    <p>_____Id____: <input type="text" th:field="*{password}" /></p>
-    <p>_____Id____: <input type="text" th:field="*{address}" /></p>
-    <input type="submit" value="Зарегестрироваться">
-</form>
+<!--<form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">-->
+    <h3>Users</h3>
+<table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>number</th>
+        <th>login</th>
+    </tr>
+    <tr th:each="users : ${users}">
+        <td th:text="${users}"></td>
+        <td th:text="${users.name}"></td>
+        <td th:text="${users.number}"></td>
+        <td th:text="${users.login}"></td>
+    </tr>
+</table>
+<!--    <p>_________: <input type="text" th:field="*{name}" /></p>-->
+<!--    <p>_____Id____: <input type="text" th:field="*{role}" /></p>-->
+<!--    <p>_____Id____: <input type="text" th:field="*{number}" /></p>-->
+<!--    <p>_____Id____: <input type="text" th:field="*{login}" /></p>-->
+<!--    <p>_____Id____: <input type="text" th:field="*{password}" /></p>-->
+<!--    <p>_____Id____: <input type="text" th:field="*{address}" /></p>-->
+<!--    <input type="submit" value="Зарегестрироваться">-->
+<!--</form>-->
 </body>
 </html>
