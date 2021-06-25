@@ -4,9 +4,10 @@ import com.netcraker.model.Product;
 import com.netcraker.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class ProductController {
@@ -15,23 +16,21 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping("/index")
-    public String index( Model model, Model model2){
-        Iterable<Product> products = productService.findAll();
-        model.addAttribute("product",products);
+    public String index(){
         return "index";
     }
 
     @GetMapping("/basket")
-    public String hello(){
+    public String basket(){
         return "basket";
     }
 
-//    @GetMapping("/index1")
-//    public String countBasket(Model model,Model model2){
-//        count++;
-//        Iterable<Product> products = productService.findAll();
-//        model.addAttribute("product",products);
-//        model2.addAttribute("count",count);
-//        return "index";
-//    }
+    @GetMapping("/product")
+    @ResponseBody
+    public List<Product> showProduct(){
+    List<Product> list = productService.findAll();
+    return list;
+    }
+
+
 }

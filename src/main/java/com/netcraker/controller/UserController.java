@@ -3,6 +3,7 @@ package com.netcraker.controller;
 
 import com.netcraker.model.User;
 import com.netcraker.services.UserService;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,11 +17,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/greeting")
-    public String hello(Model model) {
-        Iterable<User> users = userService.findAll();
-        model.addAttribute("users", users);
-        return "greeting";
+    @GetMapping("/register")
+    public String registration(Model model) {
+    return "register";
+    }
+
+    @PostMapping("/register")
+    public @ResponseBody void addUser(@RequestBody User user,Model model){
+        System.out.println(user.getName());
+
     }
 }
 
