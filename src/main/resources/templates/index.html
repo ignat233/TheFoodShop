@@ -43,31 +43,35 @@
 
 <div class="container">
     <div class="row">
-<div class="col-sm-4">
+<div class="col-sm-3">
         <form action="/basket" method="get">
             <p><input type="submit"  value="Корзина"></p>
         </form>
 
 </div>
-    <div class="col-sm-4" ng-app="indexApp" ng-controller="indexCtrl"  >
+    <div class="col-sm-6" ng-app ="indexApp" ng-controller="indexCtrl" >
         <h3>Меню</h3>
 <table>
                 <tr>
                     <th>Название</th>
                     <th>цена</th>
                     <th></th>
+                    <th style="width: 45px">Кол.</th>
+                    <th></th>
+                    <th>Итог</th>
                 </tr>
 
             <tr ng-repeat="x in products track by $index">
                 <td>{{ x.name }}</td>
-                <td>{{ x.price }}</td>
-                <td><input type="button" ng-click="deleteInLocalStorage($index,x)"  ng-disabled="!dis(x)" value="-">
-                    <input type="button" ng-click="putInLocalStorage($index,x)" ng-disabled="dis(x)" value="+"></td>
+                <td>{{ x.price }}р.</td>
+                <td><input type="button" ng-click="deleteInLocalStorage(x.id,x)"  ng-disabled="!dis(x)" value="-"></td>
+                <td><input type="number" min="0" max="{{x.count}}"  data-ng-model="x.qty"  style="width: 45px" ></td>
+                <td>  <input type="button" ng-click="putInLocalStorage(x.id,x,x.qty)" ng-disabled="dis(x)" value="+"></td>
+                <td> {{total(x.qty,x.price)}}р.</td>
             </tr>
-
 </table>
-    </div>
-    <div class="col-sm-4">
+   </div>
+    <div class="col-sm-3">
 <div th:if="${param.error}">
     Invalid username and password.
 </div>
@@ -76,9 +80,9 @@
 </div>
 <div style="float:right; margin-right:10px;">
     <form th:action="@{/login}" method="get">
-        <div><label> Login : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Войти"/></div>
+        <div><label> Login : <input type="text" name="username"> </label></div>
+        <div><label> Password: <input type="password" name="password"> </label></div>
+        <div><input type="submit" value="Войти"></div>
     </form>
     <a href="/register">Зарегистрироваться</a>
 </div>
@@ -89,6 +93,9 @@
 
     <script>
 angular.module('indexApp', []).controller('indexCtrl',function($scope, $http) {
+
+
+
 
  $http({
     method : "GET",
@@ -101,8 +108,10 @@ $scope.products = res.data;
                 console.log("Error: " + res.status + " : " + res.data);
                 }
   );
-  $scope.putInLocalStorage = function(id,product) {
-  localStorage.setItem(id,JSON.stringify(product));
+  $scope.putInLocalStorage = function(id,product,qtys) {
+  if( !isNaN(qtys)){
+  product['qty'] = qtys;
+  localStorage.setItem(id,JSON.stringify(product));}
   }
 
  $scope.deleteInLocalStorage = function(id,product){
@@ -120,6 +129,13 @@ return true;
          }
 return false;
  }
+
+ $scope.total = function(qty,price){
+ if(isNaN(qty)) return 0;
+ else return qty * price;
+ }
+
+
 });
 </script>
 

@@ -2,8 +2,6 @@ package com.netcraker.model;
 
 
 
-import net.bytebuddy.implementation.bind.annotation.Default;
-
 import javax.persistence.*;
 
 @Entity
@@ -15,7 +13,7 @@ public class User {
     private int id;
 
 
-    private String role;
+    private Role role;
 
     @Column(name="user_name")
     private String name;
@@ -25,7 +23,7 @@ public class User {
     private String address;
 
 
-    public User(int id, String role, String name, String number, String login, String password, String address) {
+    public User(int id, Role role, String name, String number, String login, String password, String address) {
         this.id = id;
         this.role = role;
         this.name = name;
@@ -48,11 +46,11 @@ public class User {
         this.id = id;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

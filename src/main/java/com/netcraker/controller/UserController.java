@@ -1,7 +1,9 @@
 package com.netcraker.controller;
 
 
+import com.netcraker.model.Role;
 import com.netcraker.model.User;
+import com.netcraker.repository.UserRepository;
 import com.netcraker.services.UserService;
 import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserRepository userService;
 
     @GetMapping("/register")
     public String registration(Model model) {
@@ -23,9 +25,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public @ResponseBody void addUser(@RequestBody User user,Model model){
+    public @ResponseBody String addUser(@RequestBody User user){
+        System.out.println("agababab");
+        user.setRole(Role.User);
         System.out.println(user.getName());
-
+        userService.save(user);
+        return "index";
     }
 }
 

@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div class="container-fluid">
-        <a href="/index" class="navbar-bread"><img src="img/img.png"></a>
+        <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://png.pngtree.com/png-vector/20190618/ourlarge/pngtree-lunchdishspoonknife-abstract-flat-color-icon-template-png-image_1488580.jpg"></a>
     </div>
 </nav>
 <h3>Корзина</h3>
@@ -20,16 +20,27 @@
         <tr>
             <th>Название</th>
             <th>цена</th>
+            <th>Кол.</th>
+            <th>Итог</th>
+            <th></th>
+            <th></th>
             <th></th>
         </tr>
 
         <tr ng-repeat="x in products track by $index">
             <td>{{ x.name }}</td>
             <td>{{ x.price }}</td>
+            <td>{{x.qty}}</td>
+            <td> {{total(x.qty,x.price)}}р.</td>
+            <td><input type="button" ng-click="deleteInLocalStorage(x.id,x)"  ng-disabled="!dis(x)" value="Удалить товар"></td>
+            <td>  <input type="button" ng-click="putNewInLocalStorage(x.id,x,newQty)"  value="Изменить колличество товара на"></td>
+            <td><input type="number" min="0" max="{{x.count}}"  data-ng-model="newQty"  style="width: 45px" ></td>
         </tr>
         <tr>
             <td style="float:right">Cумма заказа:</td>
-            <td>{{sum}}</td>
+            <th></th>
+            <th></th>
+            <td>{{sum()}}</td>
         </tr>
     </table>
 </div>
@@ -46,19 +57,48 @@ values.push( JSON.parse(localStorage.getItem(keys[i])) );
 return values;
 }
 
-function sumAllStorage(){
+
+
+angular.module('basketApp', []).controller('basketCtrl',function($scope) {
+       $scope.products = allStorage();
+       $scope.sum = function(){
 var sum = 0;
 n =allStorage().length -1;
 while(n>=0){
-sum += allStorage()[n].price;
+sum += allStorage()[n].price * allStorage()[n].qty;
 n--;
 }
 return sum;
 }
 
-angular.module('basketApp', []).controller('basketCtrl',function($scope) {
-       $scope.products = allStorage();
-       $scope.sum = sumAllStorage();
+  $scope.putNewInLocalStorage = function(id,product,qtys) {
+  if( !isNaN(qtys)) {
+  product.qty = qtys;
+  localStorage.setItem(id,JSON.stringify(product));}
+  }
+
+ $scope.deleteInLocalStorage = function(id,product){
+ localStorage.removeItem(id);
+ window.location.reload();
+ }
+
+ $scope.dis = function(prd){
+               keys = Object.keys(localStorage);
+            n = keys.length - 1;
+        while(n>=0){
+        if(JSON.parse(localStorage.getItem(keys[n])).id == prd.id){
+return true;
+        }
+         n--;
+         }
+return false;
+ }
+
+ $scope.total = function(qty,price){
+ if(isNaN(qty)) return 0;
+ else return qty * price;
+ }
+
 });
 </script>
 

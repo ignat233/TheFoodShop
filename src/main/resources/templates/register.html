@@ -10,7 +10,7 @@
 <body>
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div class="container-fluid">
-        <a href="/index" class="navbar-bread"><img src="img/img.png"></a>
+        <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://png.pngtree.com/png-vector/20190618/ourlarge/pngtree-lunchdishspoonknife-abstract-flat-color-icon-template-png-image_1488580.jpg"></a>
     </div>
 </nav>
 <h3>Регистрация</h3>
@@ -21,8 +21,8 @@
 <p>Number:<input type="text" ng-model="number"></p>
 <p>Address:<input type="text" ng-model="address"></p>
 <input type="button" ng-click="sendData()" value="Зарегистрироваться">
-    <p>{{msg}}</p>
 </div>
+
 
 <script>
 
@@ -39,12 +39,13 @@ $scope.sendData = function(){
        $http({
             method: 'POST',
             url: '/register',
-            data: JSON.stringify(data),
+            data: data,
            headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
-        }).then(function(res){
-        $scope.res = res.data;
+        }).then(function(){
+<!--        $scope.res = res.data;-->
+console.log(data);
         },
         function(res){
         console.log('not cool');
