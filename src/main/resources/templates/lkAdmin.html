@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+<head>
+    <title>Login</title>
+    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+    <!--    <link rel="stylesheet" href="main.css">-->
+</head>
+<body>
+<nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
+    <div style="text-align: left; padding-left: 20px">
+        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
+    </div>
+    <div style="margin:0 auto">
+        <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
+    </div>
+    <div style="text-align: right; padding-right: 20px">
+        <form action="/basket" method="get">
+            <input type="image" style="width: 50px"  src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
+        </form>
+    </div>
+</nav>
+<p>ADMIN</p>
+
+<div  ng-app ="adminApp" ng-controller="adminCtrl">
+    <table>
+        <tr>
+            <th>id</th>
+            <th>Полное имя</th>
+            <th name="username">Логин</th>
+            <th>Номер телефона</th>
+            <th>Аресс</th>
+            <th></th>
+
+        </tr>
+
+        <tr ng-repeat="x in users track by $index">
+
+          <td>{{x.id}}</td>
+          <td>{{x.name}}</td>
+          <td name="username">{{x.username}}</td>
+          <td>{{x.number}}</td>
+          <td>{{x.address}}</td>
+          <td><input type="button" ng-click="deleteUser(x.username)" value="удалить пользователя"></td>
+        </tr>
+    </table>
+</div>
+    <script>
+        angular.module('adminApp', []).controller('adminCtrl',function($scope, $http) {
+
+ $http({
+    method : "GET",
+      url : "/users"
+  }).then(
+            function(res) {
+$scope.users = res.data;
+            },
+            function(res) {
+                console.log("Error: " + res.status + " : " + res.data);
+                }
+  );
+
+$scope.deleteUser = function(username){
+ var data = username
+       $http({
+            method: 'POST',
+            url: '/delete',
+            data: data,
+<!--             headers: {-->
+<!--                'Content-Type': 'application/json'-->
+<!--            }-->
+        }).then(function success(res){
+        console.log(data);
+        $scope.res = res.data;
+
+        },
+        function(res){
+        console.log('not cool');
+    }
+        );
+        }
+});
+    </script>
+</body>
+</html>

@@ -20,16 +20,15 @@ public class ProductController {
         return "index";
     }
 
-    @GetMapping("/basket")
+    @GetMapping("/cart")
     public String basket(){
-        return "basket";
+        return "cart";
     }
 
     @GetMapping("/product")
     @ResponseBody
     public List<Product> showProduct(){
-    List<Product> list = productService.findAll();
-    return list;
+    return productService.findAll();
     }
 
 

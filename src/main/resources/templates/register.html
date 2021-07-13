@@ -4,25 +4,96 @@
 <head>
     <meta name="viewport" charset="UTF-8">
     <title>Registration</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-</head>
+    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<!--    <link rel="stylesheet" href="main.css"></head>-->
 <body>
+
+<!--Шапка-->
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
-    <div class="container-fluid">
-        <a href="/index" class="navbar-bread"><img src="img/img.png"></a>
+    <div style="text-align: left; padding-left: 20px">
+        <a href="/login" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
+    </div>
+    <div style="margin:0 auto">
+        <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
+    </div>
+    <div style="text-align: right; padding-right: 20px">
+        <form action="/cart" method="get">
+            <input type="image" style="width: 50px"  src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
+        </form>
     </div>
 </nav>
+
+<form action="#" th:action="@{/register}" th:object="${usernameError}" method="post">
+    <p th:text="${usernameError}"/>
+</form>
+
+
+
+<!--Регистрация-->
 <h3>Регистрация</h3>
-<div ng-app="registerApp" ng-controller="registerCtrl">
-<p>Full Name:<input type="text" ng-model="name"></p>
-<p>Login:<input type="text" ng-model="login"></p>
-<p>Password:<input type="text" ng-model="password"></p>
-<p>Number:<input type="text" ng-model="number"></p>
-<p>Address:<input type="text" ng-model="address"></p>
-<input type="button" ng-click="sendData()" value="Зарегистрироваться">
-    <p>{{msg}}</p>
+<!--<div ng-app="registerApp" ng-controller="registerCtrl">-->
+<form   th:action="@{/register}" th:object="${user}" method="post">
+<p>Full Name:<input type="text" th:field="*{name}"></p>
+<p>Login:<input type="text" th:field="*{username}"></p>
+<p>Password:<input type="password" th:field="*{password}"></p>
+<p>Number:<input type="text" th:field="*{number}"></p>
+<p>Address:<input type="text" th:field="*{address}"></p>
+<!--<p>Address:<input type="text" th:field="*{role}"></p>-->
+<input type="submit"  value="Зарегистрироваться">
+<!--<input type="button" ng-click="sendData()" value="Зарегистрироваться">-->
+<!--</div>-->
+</form>
+
+<div class="container-fluid">
+    <div class="row jumbotron">
+        <div class="col-xs-12 col=sm-12 col-md-9 col-lg-9 col-xl-10">
+            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа. Необходимость терять время за пустым столиком раздражает многих, особенно в обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать предзаказ и прийти в в наш ресторан, когда еда уже готова спецально для Вас. </p>
+        </div>
+        <div class="col-xs-12 col=sm-12 col-md-3 col-lg-3 col-xl-2">
+            <a href="#"><button class="btn btn-success btn-lg press" type="button">Читать далее</button></a>
+        </div>
+    </div>
 </div>
+
+
+<div class="container-fluid ">
+    <div class="row text-center alert">
+        <div class="col-12">
+            <h3 class="display-4">Информация о партнерах</h3>
+        </div>
+        <hr>
+        <div class="col-12">
+            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем только свежие продукты отменного качества, в этом нам помогает компания Productar с многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми известные компании для достави еды Яндекс Еда и Delivery Club.</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid padding">
+    <div class="row text-center padding">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
+            <h3>Яндекс Еда</h3>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <i class="fas fa-bold"><a href=""><img style="width: 50px" src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
+            <h3>Delivery Club</h3>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px" src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
+            <h3>Productar</h3>
+        </div>
+
+    </div>
+</div>
+
+
 
 <script>
 
@@ -39,12 +110,14 @@ $scope.sendData = function(){
        $http({
             method: 'POST',
             url: '/register',
-            data: JSON.stringify(data),
-           headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+            data: data,
+             headers: {
+                'Content-Type': 'application/json'
             }
-        }).then(function(res){
+        }).then(function success(res){
+        console.log(data);
         $scope.res = res.data;
+
         },
         function(res){
         console.log('not cool');

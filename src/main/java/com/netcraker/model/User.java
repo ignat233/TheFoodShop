@@ -2,58 +2,64 @@ package com.netcraker.model;
 
 
 
-import net.bytebuddy.implementation.bind.annotation.Default;
+import lombok.Data;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "userscafe")
+
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
+    @ElementCollection(targetClass = Role.class,fetch = FetchType.LAZY)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private  Set<Role> roles;
 
-    private String role;
+    private boolean active;
 
-    @Column(name="user_name")
+    @Column(name = "fullname")
     private String name;
     private String number;
-    private String login;
+    private String username;
     private String password;
     private String address;
 
 
-    public User(int id, String role, String name, String number, String login, String password, String address) {
-        this.id = id;
-        this.role = role;
-        this.name = name;
-        this.number = number;
-        this.login = login;
-        this.password = password;
-        this.address = address;
-    }
+
 
     public User() {
 
     }
 
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public Set<Role> getRole() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getName() {
@@ -72,12 +78,12 @@ public class User {
         this.number = number;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -94,5 +100,48 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    //    @Override
+//    public String getUsername() {
+//        return username;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return true;
+//    }
+//
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return getRole();
+//    }
+//
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", role=" + roles +
+                ", name='" + name + '\'' +
+                ", number='" + number + '\'' +
+                ", login='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }
