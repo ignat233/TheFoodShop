@@ -20,9 +20,6 @@ public class UserService {
         @Autowired
         private UserRepository userRepository;
 
-//    @Autowired
-//    BCryptPasswordEncoder bCryptPasswordEncoder;
-
     public List<User> findAll() {
 
         return userRepository.findAllUser();
@@ -82,7 +79,3 @@ public boolean editUsername(User user,HttpServletRequest request){
         userRepository.save(userFromDB);
     }
 }
-//удаление user
-//обязаности админа?
-//личный кабинет юзера?(прошлые заказы,изменение логина...)
-//url-username

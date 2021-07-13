@@ -13,12 +13,6 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public List<Product> findAll() {
-
-//        Iterable it = productRepository.findAll();
-//
-//        List products = new ArrayList<User>();
-//        it.forEach(e -> products.add(e));
-
         return productRepository.findAll();
     }
 

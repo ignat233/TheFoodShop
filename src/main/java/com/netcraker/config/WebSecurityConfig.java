@@ -56,24 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .logoutSuccessUrl("/lk");
     }
 
-//    @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-//        return bCryptPasswordEncoder;
-//    }
-//    @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        final CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(ImmutableList.of("*"));
-//        configuration.setAllowedMethods(ImmutableList.of("GET", "POST"));
-//        configuration.setAllowCredentials(true);
-//        configuration.setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
-//        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 
-//
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
@@ -83,20 +66,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("SELECT u.username, ur.roles from userscafe u inner join user_role ur on u.id=ur.user_id where username=?");
     }
 
-
-
-//    @Autowired
-//    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
-//    }
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService(){
-//        UserDetails user = User.withDefaultPasswordEncoder()
-//                .username("u")
-//                .password("1")
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }

@@ -1,26 +1,17 @@
 package com.netcraker.controller;
 
 
-import com.netcraker.model.Product;
-import com.netcraker.model.Role;
 import com.netcraker.model.User;
 import com.netcraker.repository.UserRepository;
 import com.netcraker.services.UserService;
-import org.apache.tomcat.util.json.JSONParser;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
 import java.util.List;
 
 
