@@ -54,6 +54,7 @@
 <!--Продукты-->
 <div class="container">
     <div class="row">
+<<<<<<< HEAD
         <div class="col-sm-3">
 <!--            <form action="/basket" method="get">-->
 <!--                <p><input type="submit"  value="Корзина"></p>-->
@@ -86,6 +87,50 @@
         <div class="col-sm-3">
         </div>
     </div>
+=======
+<div class="col-sm-3">
+        <form action="/basket" method="get">
+            <p><input type="submit"  value="Корзина"></p>
+        </form>
+
+</div>
+    <div class="col-sm-6" ng-app ="indexApp" ng-controller="indexCtrl" >
+        <h3>Меню</h3>
+<table>
+                <tr>
+                    <th>Название</th>
+                    <th>цена</th>
+                    <th></th>
+                    <th style="width: 45px">Кол.</th>
+                    <th></th>
+                    <th>Итог</th>
+                </tr>
+
+            <tr ng-repeat="x in products track by $index">
+                <td>{{ x.name }}</td>
+                <td>{{ x.price }}р.</td>
+                <td><input type="button" ng-click="deleteInLocalStorage(x.id,x)"  ng-disabled="!dis(x)" value="-"></td>
+                <td><input type="number" min="0" max="{{x.count}}"  data-ng-model="x.qty"  style="width: 45px" ></td>
+                <td>  <input type="button" ng-click="putInLocalStorage(x.id,x,x.qty)" ng-disabled="dis(x)" value="+"></td>
+                <td> {{total(x.qty,x.price)}}р.</td>
+            </tr>
+</table>
+   </div>
+    <div class="col-sm-3">
+<div th:if="${param.error}">
+    Invalid username and password.
+</div>
+<div th:if="${param.logout}">
+    You have been logged out.
+</div>
+<div style="float:right; margin-right:10px;">
+    <form th:action="@{/login}" method="get">
+        <div><label> Login : <input type="text" name="username"> </label></div>
+        <div><label> Password: <input type="password" name="password"> </label></div>
+        <div><input type="submit" value="Войти"></div>
+    </form>
+    <a href="/register">Зарегистрироваться</a>
+>>>>>>> bdf28185b497989f95fe6c476d6f3df0fc69e28a
 </div>
 
 
@@ -134,6 +179,9 @@
 <script>
 angular.module('indexApp', []).controller('indexCtrl',function($scope, $http) {
 
+
+
+
  $http({
     method : "GET",
       url : "/product"
@@ -172,10 +220,13 @@ return false;
  else return qty * price;
  }
 
+<<<<<<< HEAD
 <!--$scope.img = function(prd){-->
 <!-- if(dis(prd))return "https://image.flaticon.com/icons/png/512/1415/1415675.png";-->
 <!-- else return "https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg";-->
 <!-- }-->
+=======
+>>>>>>> bdf28185b497989f95fe6c476d6f3df0fc69e28a
 
 });
 </script>

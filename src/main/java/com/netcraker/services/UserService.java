@@ -10,8 +10,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+<<<<<<< HEAD
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+=======
+import java.util.ArrayList;
+>>>>>>> bdf28185b497989f95fe6c476d6f3df0fc69e28a
 import java.util.List;
 
 @Service
@@ -22,6 +26,7 @@ public class UserService {
 
     public List<User> findAll() {
 
+<<<<<<< HEAD
         return userRepository.findAllUser();
     }
 
@@ -37,6 +42,14 @@ public class UserService {
         userRepository.save(user);
         return true;
 
+=======
+        Iterable it = userRepository.findAll();
+
+        List users = new ArrayList<User>();
+        it.forEach(e -> users.add(e));
+
+        return users;
+>>>>>>> bdf28185b497989f95fe6c476d6f3df0fc69e28a
     }
 
 public void deleteUser(String username){

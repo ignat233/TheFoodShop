@@ -2,9 +2,12 @@ package com.netcraker.model;
 
 
 
+<<<<<<< HEAD
 import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
 
+=======
+>>>>>>> bdf28185b497989f95fe6c476d6f3df0fc69e28a
 import javax.persistence.*;
 import java.util.Set;
 
@@ -22,7 +25,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private  Set<Role> roles;
 
+<<<<<<< HEAD
     private boolean active;
+=======
+    private Role role;
+>>>>>>> bdf28185b497989f95fe6c476d6f3df0fc69e28a
 
     @Column(name = "fullname")
     private String name;
@@ -32,7 +39,19 @@ public class User {
     private String address;
 
 
+<<<<<<< HEAD
 
+=======
+    public User(int id, Role role, String name, String number, String login, String password, String address) {
+        this.id = id;
+        this.role = role;
+        this.name = name;
+        this.number = number;
+        this.login = login;
+        this.password = password;
+        this.address = address;
+    }
+>>>>>>> bdf28185b497989f95fe6c476d6f3df0fc69e28a
 
     public User() {
 
@@ -46,6 +65,7 @@ public class User {
         this.id = id;
     }
 
+<<<<<<< HEAD
     public Set<Role> getRole() {
         return roles;
     }
@@ -60,6 +80,14 @@ public class User {
 
     public void setActive(boolean active) {
         this.active = active;
+=======
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+>>>>>>> bdf28185b497989f95fe6c476d6f3df0fc69e28a
     }
 
     public String getName() {
