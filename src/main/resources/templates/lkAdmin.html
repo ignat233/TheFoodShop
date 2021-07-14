@@ -50,7 +50,55 @@
           <td><input type="button" ng-click="deleteUser(x.username)" value="удалить пользователя"></td>
         </tr>
     </table>
+
+    <table>
+        <h3> Продукты</h3>
+        <tr>
+            <th>Название</th>
+            <th>Цена</th>
+            <th>Кол-во</th>
+
+        </tr>
+
+        <tr ng-repeat="prd in products track by $index">
+            <td style="padding-right: 10px">{{ prd.name }}</td>
+            <td style="padding-right: 8px">{{ prd.price }}р.</td>
+            <td style="padding-right: 8px">{{ prd.count }}</td>
+        </tr>
+    </table>
 </div>
+
+<h3>Добавление продуктов</h3>
+<form   th:action="@{/addProduct}" th:object="${product}" method="post">
+    <p>Name:<input type="text" th:field="*{name}"></p>
+    <p>price:<input type="text" th:field="*{price}"></p>
+    <p>count:<input type="text" th:field="*{count}"></p>
+    <input type="submit"  value="Добавить продукт">
+</form>
+
+
+<h3> Редактирование продукта</h3>
+<form action="#" th:action="@{/editProduct}"  th:object="${productMassage}" method="post">
+    <p th:text="${editMassage}"/>
+</form>
+<form   th:action="@{/editProduct}"  th:object="${product}" method="post">
+    <table>
+        <tr>
+            <td>Введите продукт,который хотите редактировать:</td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Цена:</td>
+            <td><input type="text" th:field="*{price}"></td>
+        </tr>
+        <tr>
+            <td>Кол-во:</td>
+            <td><input type="text" th:field="*{count}"></td>
+        </tr>
+    </table>
+    <input type="submit"  value="Изменить продукт">
+</form>
+
     <script>
         angular.module('adminApp', []).controller('adminCtrl',function($scope, $http) {
 
@@ -66,15 +114,24 @@ $scope.users = res.data;
                 }
   );
 
+ $http({
+    method : "GET",
+      url : "/product"
+  }).then(
+            function(res) {
+$scope.products = res.data;
+            },
+            function(res) {
+                console.log("Error: " + res.status + " : " + res.data);
+                }
+  );
+
 $scope.deleteUser = function(username){
  var data = username
        $http({
             method: 'POST',
             url: '/delete',
             data: data,
-<!--             headers: {-->
-<!--                'Content-Type': 'application/json'-->
-<!--            }-->
         }).then(function success(res){
         console.log(data);
         $scope.res = res.data;
@@ -86,6 +143,7 @@ $scope.deleteUser = function(username){
         );
         }
 });
+
     </script>
 </body>
 </html>

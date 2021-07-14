@@ -10,7 +10,7 @@ import java.util.List;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 
     @Query(value = "SELECT * from userscafe u inner join user_role ur on u.id=ur.user_id where roles='USER'", nativeQuery = true)
     List<User> findAllUser();

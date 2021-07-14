@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -43,25 +44,21 @@ public class UserService {
     }
 
 public void deleteUser(String username){
-    userRepository.deletRolebyId(userRepository.findByUsername(username).getId());
-    userRepository.deleteByUsername(username);
+    userRepository.deleteById(userRepository.findByUsername(username).getId());
 }
 
-public String findRoleByUsername(String username){
-        return userRepository.findByUsername(username).getRole().toString();
+public Set<Role> findRoleByUsername(String username){
+        return userRepository.findByUsername(username).getRole();
 }
 
 
 
 public boolean editUsername(User user,HttpServletRequest request){
-    System.out.println(user);
     User userFromDBs = userRepository.findByUsername(user.getUsername());
     if (userFromDBs != null) {
         return false;
     }
         User userFromDB = userRepository.findByUsername(request.getUserPrincipal().getName());
-    System.out.println(user);
-    System.out.println(userFromDB);
         userFromDB.setUsername(user.getUsername());
     userRepository.save(userFromDB);
     return true;
@@ -82,7 +79,3 @@ public boolean editUsername(User user,HttpServletRequest request){
         userRepository.save(userFromDB);
     }
 }
-//удаление user
-//обязаности админа?
-//личный кабинет юзера?(прошлые заказы,изменение логина...)
-//url-username

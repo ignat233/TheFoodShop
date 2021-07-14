@@ -38,14 +38,14 @@
 
 
 
-        <form   th:action="@{/editLogin}"  method="post">
+        <form  action="/editLogin"  th:action="@{/editLogin}"  method="post">
             <table>
             <tr>
-                <td>Login:</td>
+                <td>Логин:</td>
                 <td><input type="text"  th:field="*{username}"></td>
             </tr>
             </table>
-            <input type="submit"  value="Изменить Login">
+            <input type="submit" value="Изменить Логин">
         </form>
 
 

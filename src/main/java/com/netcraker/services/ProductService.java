@@ -2,8 +2,11 @@ package com.netcraker.services;
 
 import com.netcraker.model.Product;
 import com.netcraker.repository.ProductRepository;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,13 +16,28 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public List<Product> findAll() {
+        Iterable<Product> it = productRepository.findAll();
+        ArrayList<Product> users = new ArrayList<>();
+        it.forEach(e -> users.add(e));
 
-//        Iterable it = productRepository.findAll();
-//
-//        List products = new ArrayList<User>();
-//        it.forEach(e -> products.add(e));
+        return users;
+    }
 
-        return productRepository.findAll();
+    public boolean saveProduct(Product product) {
+        Product productFromDB = productRepository.findByName(product.getName());
+        if (productFromDB != null) {
+            return false;
+        }
+        productRepository.save(product);
+        return true;
+
+    }
+
+    public void editProduct(Product product){
+        Product productFromDB = productRepository.findByName(product.getName());
+        productFromDB.setCount(product.getCount());
+        productFromDB.setPrice(product.getPrice());
+        productRepository.save(productFromDB);
     }
 
 }
