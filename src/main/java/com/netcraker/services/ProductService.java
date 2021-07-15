@@ -2,7 +2,6 @@ package com.netcraker.services;
 
 import com.netcraker.model.Product;
 import com.netcraker.repository.ProductRepository;
-import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

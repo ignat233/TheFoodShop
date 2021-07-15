@@ -38,7 +38,8 @@ public class UserController {
     @PostMapping("/register")
     public String addUser(@ModelAttribute User user,Model model){
         if (!userService.saveUser(user)) {
-               model.addAttribute("usernameError", "Пользователь с таким логином уже существует");
+            String usernameError = "Пользователь с таким логином уже существует";
+               model.addAttribute("usernameError", usernameError);
               return "register";
            }
         return "redirect:/login";
@@ -86,7 +87,8 @@ public class UserController {
     @PostMapping("/editLogin")
     public String editUser1(@ModelAttribute User user,Model model,HttpServletRequest request){
         if (!userService.editUsername(user,request)) {
-            model.addAttribute("Error", "Пользователь с таким логином уже существует");
+            String usernameError = "Пользователь с таким логином уже существует";
+            model.addAttribute("usernameError", usernameError);
             return "lkUser";
         }
       return "redirect:/login";
