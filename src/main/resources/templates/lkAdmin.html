@@ -21,7 +21,7 @@
         <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
     </div>
     <div style="text-align: right; padding-right: 20px">
-        <form action="/basket" method="get">
+        <form action="/cart" method="get">
             <input type="image" style="width: 50px"  src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
         </form>
     </div>
@@ -99,51 +99,6 @@
     <input type="submit"  value="Изменить продукт">
 </form>
 
-    <script>
-        angular.module('adminApp', []).controller('adminCtrl',function($scope, $http) {
-
- $http({
-    method : "GET",
-      url : "/users"
-  }).then(
-            function(res) {
-$scope.users = res.data;
-            },
-            function(res) {
-                console.log("Error: " + res.status + " : " + res.data);
-                }
-  );
-
- $http({
-    method : "GET",
-      url : "/product"
-  }).then(
-            function(res) {
-$scope.products = res.data;
-            },
-            function(res) {
-                console.log("Error: " + res.status + " : " + res.data);
-                }
-  );
-
-$scope.deleteUser = function(username){
- var data = username
-       $http({
-            method: 'POST',
-            url: '/delete',
-            data: data,
-        }).then(function success(res){
-        console.log(data);
-        $scope.res = res.data;
-
-        },
-        function(res){
-        console.log('not cool');
-    }
-        );
-        }
-});
-
-    </script>
+<script src="js/lkAdmin.js"></script>
 </body>
 </html>

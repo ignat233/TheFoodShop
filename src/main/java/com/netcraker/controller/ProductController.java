@@ -37,7 +37,8 @@ public class ProductController {
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute Product product, Model model) {
         if (!productService.saveProduct(product)) {
-            model.addAttribute("productMassage", "Такой продукт уже существует");
+            String productMassage = "Такой продукт уже существует";
+            model.addAttribute("productMassage", productMassage);
             return "lkAdmin";
         }
         model.addAttribute("productMassage", "Продукт добавлен");
@@ -47,7 +48,8 @@ public class ProductController {
     @PostMapping("/editProduct")
     public String editProduct(@ModelAttribute Product product, Model model){
         productService.editProduct(product);
-        model.addAttribute("editMassage", "Продукт отредактирован");
+        String productMassage = "Продукт отредактирован";
+        model.addAttribute("editMassage", productMassage);
         return "lkAdmin";
     }
 
