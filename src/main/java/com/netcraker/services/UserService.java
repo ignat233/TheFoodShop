@@ -5,9 +5,9 @@ import com.netcraker.model.User;
 import com.netcraker.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -17,12 +17,13 @@ public class UserService {
         @Autowired
         private UserRepository userRepository;
 
-//    @Autowired
-//    BCryptPasswordEncoder bCryptPasswordEncoder;
-
     public List<User> findAll() {
+        Iterable it = userRepository.findAll();
 
-        return userRepository.findAllUser();
+        List users = new ArrayList<User>();
+        it.forEach(e -> users.add(e));
+
+        return users;
     }
 
     public boolean saveUser(User user) {
@@ -74,4 +75,6 @@ public boolean editUsername(User user,HttpServletRequest request){
         userFromDB.setNumber(user.getNumber());
         userRepository.save(userFromDB);
     }
+
 }
+

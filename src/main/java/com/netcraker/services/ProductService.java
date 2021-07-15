@@ -37,6 +37,7 @@ public class ProductService {
         productFromDB.setCount(product.getCount());
         productFromDB.setPrice(product.getPrice());
         productRepository.save(productFromDB);
+
     }
 
 }

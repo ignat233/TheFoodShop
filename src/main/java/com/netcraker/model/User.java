@@ -1,10 +1,5 @@
 package com.netcraker.model;
 
-
-
-import lombok.Data;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -20,9 +15,10 @@ public class User {
     @ElementCollection(targetClass = Role.class,fetch = FetchType.LAZY)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private  Set<Role> roles;
+    private Set<Role> role;
 
     private boolean active;
+
 
     @Column(name = "fullname")
     private String name;
@@ -30,8 +26,6 @@ public class User {
     private String username;
     private String password;
     private String address;
-
-
 
 
     public User() {
@@ -44,14 +38,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Set<Role> getRole() {
-        return roles;
-    }
-
-    public void setRole(Set<Role> roles) {
-        this.roles = roles;
     }
 
     public boolean isActive() {
@@ -102,44 +88,23 @@ public class User {
         this.address = address;
     }
 
-    //    @Override
-//    public String getUsername() {
-//        return username;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isAccountNonLocked() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isCredentialsNonExpired() {
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean isEnabled() {
-//        return true;
-//    }
-//
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        return getRole();
-//    }
-//
+    public Set<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<Role> role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", role=" + roles +
+                ", role=" + role +
+                ", active=" + active +
                 ", name='" + name + '\'' +
                 ", number='" + number + '\'' +
-                ", login='" + username + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", address='" + address + '\'' +
                 '}';
