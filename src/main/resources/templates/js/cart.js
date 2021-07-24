@@ -9,9 +9,27 @@
  return values;
  }
 
+ function allProductInOrder(){
+ var product = [];
+  n =allStorage().length -1;
+  while ( i-- ) {
+  product.push(allStorage()[i].id);
+  }
+  return product;
+ }
+
+  function qtyProductInOrder(){
+  var qty = [];
+   n =allStorage().length -1;
+   while ( i-- ) {
+   qty.push(allStorage()[i].qty);
+   }
+   return qty;
+  }
 
 
- angular.module('basketApp', []).controller('basketCtrl',function($scope) {
+
+ angular.module('basketApp', []).controller('basketCtrl',function($scope, $http) {
         $scope.products = allStorage();
         $scope.sum = function(){
  var sum = 0;
@@ -50,5 +68,25 @@
   if(isNaN(qty)) return 0;
   else return qty * price;
   }
+
+  $scope.addOrder = function(){
+   var data = {
+                  product: allProductInOrder(),
+                  qty: qtyProductInOrder
+                };
+                 $http({
+                      method: 'POST',
+                      url: '/addOrder',
+                      data: data,
+                  }).then(function success(res){
+                  console.log(data);
+                  $scope.res = res.data;
+
+                  },
+                  function(res){
+                  console.log('not cool');
+              }
+                  );
+                  }
 
  });

@@ -1,5 +1,6 @@
 package com.netcraker.controller;
 
+import com.netcraker.model.Order;
 import com.netcraker.model.Product;
 import com.netcraker.model.User;
 import com.netcraker.services.ProductService;
@@ -24,7 +25,8 @@ public class ProductController {
     }
 
     @GetMapping("/cart")
-    public String cart(){
+    public String cart(Model model){
+        model.addAttribute("data",new Order());
         return "cart";
     }
 
@@ -39,20 +41,30 @@ public class ProductController {
         if (!productService.saveProduct(product)) {
             String productMassage = "Такой продукт уже существует";
             model.addAttribute("productMassage", productMassage);
-            return "lkAdmin";
+            return "adminProduct";
         }
 
         String productMassage = "Продукт добавлен";
         model.addAttribute("productMassage", productMassage);
-        return "lkAdmin";
+        return "adminProduct";
+    }
+
+    @GetMapping("/adminProduct")
+    public String showProductToAdmin(Model model){
+        model.addAttribute("product",new Product());
+        return "adminProduct";
     }
 
     @PostMapping("/editProduct")
     public String editProduct(@ModelAttribute Product product, Model model){
-        productService.editProduct(product);
+        if(!productService.editProduct(product)) {
+            String productMassage = "Назавние продукта введено некоректно";
+            model.addAttribute("editMassage", productMassage);
+            return "adminProduct";
+        }
         String productMassage = "Продукт отредактирован";
         model.addAttribute("editMassage", productMassage);
-        return "lkAdmin";
+        return "adminProduct";
     }
 
 }

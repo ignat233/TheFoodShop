@@ -6,16 +6,18 @@ import java.util.Set;
 @Entity
 @Table(name = "userscafe")
 
+
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Column(name = "user_id")
     private Long id;
 
     @ElementCollection(targetClass = Role.class,fetch = FetchType.LAZY)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> role;
+    private Set<Role> roles;
 
     private boolean active;
 
@@ -32,6 +34,8 @@ public class User {
 
     }
 
+
+
     public Long getId() {
         return id;
     }
@@ -40,7 +44,7 @@ public class User {
         this.id = id;
     }
 
-    public boolean isActive() {
+    public boolean getActive() {
         return active;
     }
 
@@ -89,18 +93,18 @@ public class User {
     }
 
     public Set<Role> getRole() {
-        return role;
+        return roles;
     }
 
-    public void setRole(Set<Role> role) {
-        this.role = role;
+    public void setRole(Set<Role> roles) {
+        this.roles = roles;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", role=" + role +
+                ", role=" + roles +
                 ", active=" + active +
                 ", name='" + name + '\'' +
                 ", number='" + number + '\'' +

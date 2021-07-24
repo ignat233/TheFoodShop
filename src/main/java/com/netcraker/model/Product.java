@@ -1,24 +1,50 @@
 package com.netcraker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String name;
     private double price;
     private int count;
 
-    public int getId() {
+//    @ManyToMany(mappedBy = "products")
+//    private Set<Order> order;
+
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @JsonIgnore
+    Set<ProductQty> qty;
+
+//    public Set<Order> getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Set<Order> order) {
+//        this.order = order;
+//    }
+
+    public Set<ProductQty> getQty() {
+        return qty;
+    }
+
+    public void setQty(Set<ProductQty> qty) {
+        this.qty = qty;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

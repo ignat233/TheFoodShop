@@ -2,17 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 <head>
-    <title>lkAdmin</title>
+    <title>Product</title>
     <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.min.js"></script>
-    <script type="text/javascript" src="js/admin.js"></script>
 
     <!--    <link rel="stylesheet" href="main.css">-->
 </head>
@@ -38,8 +34,6 @@
             </ui>
         </div>
     </div>
-
-
     <div style="text-align: center">
         <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
     </div>
@@ -51,38 +45,85 @@
 </nav>
 
 
+
+
 <div class="container">
     <div class="row">
 
-        <div class="col-sm-1">
+        <div class="col-sm-3">
 
         </div>
-        <div class="col-sm-10" ng-app ="adminApp" ng-controller="adminCtrl">
-    <table>
-        <tr>
-            <th>№ </th>
-            <th>Полное имя</th>
-            <th name="username">Логин</th>
-            <th>active</th>
-            <th>Номер телефона</th>
-            <th>Аресс</th>
-            <th></th>
-        </tr>
 
-        <tr ng-repeat="x in users track by $index">
+            <div class="col-sm-6"  ng-app ="adminApp" ng-controller="adminCtrl">
 
-          <td>{{$index + 1}}</td>
-          <td>{{x.name}}</td>
-          <td name="username">{{x.username}}</td>
-          <td>{{x.active}}</td>
-          <td>{{x.number}}</td>
-          <td>{{x.address}}</td>
-          <td><input type="button" ng-click="blockUser(x.username)" class="btn btn-primary" value={{value(x.active)}}></td>
-        </tr>
-    </table>
+                <table>
+                    <h3 style="text-align: center"> Продукты</h3>
+                    <tr>
+                        <th style="width: 300px">Название</th>
+                        <th style="width: 80px">Цена</th>
+                        <th style="width: 80px">Кол-во</th>
 
-</div>
-        <div class="col-sm-1">
+                    </tr>
+
+                    <tr ng-repeat="prd in products track by $index">
+                        <td style="padding-right: 10px">{{ prd.name }}</td>
+                        <td style="padding-right: 8px">{{ prd.price }}р.</td>
+                        <td style="padding-right: 8px;text-align: center">{{ prd.count }}</td>
+                    </tr>
+                </table>
+
+                <h3 style="text-align: center">Добавление продуктов</h3>
+                <form action="#" th:action="@{/addProduct}"  th:object="${productMassage}" method="post">
+                    <p th:text="${productMassage}"/>
+                </form>
+                <form   th:action="@{/addProduct}" th:object="${product}" method="post">
+                    <table >
+                    <tr>
+                        <th>Название:</th>
+                        <th><input type="text" style="text-align: center; width: 350px" th:field="*{name}"></th>
+                    </tr>
+                    <tr>
+                        <th>Цена:</th>
+                        <th><input type="number" min="0" style="text-align: center; width: 350px"  th:field="*{price}"></th>
+                    </tr>
+                    <tr>
+                        <th>Кол-во:</th>
+                        <th><input type="number" min="0" style="text-align: center; width: 350px"  th:field="*{count}"></th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th style="text-align: right"> <input type="submit" class="btn btn-primary" value="Добавить продукт"></th>
+                    </tr>
+                    </table>
+                </form>
+
+
+                <h3 style="text-align: center"> Редактирование продукта</h3>
+                <form action="#" th:action="@{/editProduct}"  th:object="${editMassage}" method="post">
+                    <p th:text="${editMassage}"/>
+                </form>
+                <form   th:action="@{/editProduct}"  th:object="${product}" method="post">
+                    <table>
+                        <tr>
+                            <th>Продукт для ред:</th>
+                            <th><input type="text" style="text-align: center; width: 295px"  th:field="*{name}"></th>
+                        </tr>
+                        <tr>
+                            <th>Цена:</th>
+                            <th><input type="number" min="0" style="text-align: center; width: 295px"  th:field="*{price}"></th>
+                        </tr>
+                        <tr>
+                            <th>Кол-во:</th>
+                            <th><input type="number" min="0" style="text-align: center; width: 295px"  th:field="*{count}"></th>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th style="text-align: right" ><input type="submit" class="btn btn-primary" value="Изменить продукт"></th>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        <div class="col-sm-3">
         </div>
     </div>
 
@@ -134,7 +175,6 @@
     </div>
 </div>
 
-<!--<script type="text/javascript" src="js/admin.js"></script>-->
 <script>
           angular.module('adminApp', []).controller('adminCtrl',function($scope, $http) {
 
@@ -162,27 +202,21 @@ $scope.products = res.data;
                 }
   );
 
-$scope.blockUser = function(username){
+$scope.deleteUser = function(username){
  var data = username
        $http({
             method: 'POST',
-            url: '/block',
+            url: '/delete',
             data: data,
         }).then(function success(res){
         console.log(data);
         $scope.res = res.data;
-        location.reload();
 
         },
         function(res){
         console.log('not cool');
     }
         );
-        }
-
-        $scope.value = function(active){
-        if(active == true) return "заблокировать пользователя";
-        else return "разблокировать пользователя";
         }
 });
 </script>

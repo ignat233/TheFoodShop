@@ -16,10 +16,10 @@ public class ProductService {
 
     public List<Product> findAll() {
         Iterable<Product> it = productRepository.findAll();
-        ArrayList<Product> users = new ArrayList<>();
-        it.forEach(e -> users.add(e));
+        ArrayList<Product> products = new ArrayList<>();
+        it.forEach(e -> products.add(e));
 
-        return users;
+        return products;
     }
 
     public boolean saveProduct(Product product) {
@@ -32,12 +32,13 @@ public class ProductService {
 
     }
 
-    public void editProduct(Product product){
+    public boolean editProduct(Product product){
         Product productFromDB = productRepository.findByName(product.getName());
+        if(productFromDB == null) return false;
         productFromDB.setCount(product.getCount());
         productFromDB.setPrice(product.getPrice());
         productRepository.save(productFromDB);
-
+        return true;
     }
 
 }

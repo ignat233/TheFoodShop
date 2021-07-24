@@ -31,21 +31,31 @@
 
 
 <!--Вход в систему-->
+
 <div th:if="${param.error}">
     Invalid username and password.
 </div>
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
-<div style="text-align: center">
-    <form action="/login" th:action="@{/login}" method="post">
-        <div><label>Login:<input type="text" name="username"></label></div>
-        <div><label>Password:<input type="password" name="password"></label></div>
-        <div><input class="btn btn-primary" type="submit" value="Войти"><a style="padding-left: 20px"  href="/register">Зарегистрироваться</a></div>
 
+    <form  action="/login" th:action="@{/login}" method="post">
+        <table style="margin:0 auto">
+            <tr>
+                <td style="width: 70px">Login:</td>
+                <td><input type="text" name="username"></td>
+            </tr>
+            <tr>
+                <td style="width: 70px">Password:</td>
+                <td><input type="password" name="password"></td>
+            </tr>
+            <tr>
+                <th><input style="text-align:right" class="btn btn-primary" type="submit" value="Войти"></th>
+                <th><a style="padding-left: 20px"  href="/register">Зарегистрироваться</a></th>
+            </tr>
+        </table>
     </form>
 
-</div>
 
 
 <div class="container-fluid">
@@ -80,7 +90,7 @@
             <h3>Яндекс Еда</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-bold"><a href=""><img style="width: 50px" src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
+            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px" src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
             <h3>Delivery Club</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">

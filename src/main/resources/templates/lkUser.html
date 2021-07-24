@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 <head>
-    <title>Login</title>
+    <title>Lk Data</title>
     <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -16,7 +16,21 @@
 <!--Шапка-->
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div style="text-align: left; padding-left: 20px">
-        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
+        <!--        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ui class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a href="/lk" class="navbar-brad">Личный кабинет</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/userOrder" class="navbar-brad">Заказы</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" >Выход</a>
+                </li>
+            </ui>
+        </div>
     </div>
     <div style="margin:0 auto">
         <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
@@ -28,55 +42,158 @@
     </div>
 </nav>
 
-<h1>Личный кабинет User</h1>
-
-<form style="text-align: center" th:action="@{/edit}" th:object="${usernameError}" method="post">
-    <p th:text="${Error}"/>
-</form>
-
-<form  style="text-align: center"  th:object="${user}" >
 
 
 
-        <form  action="/editLogin"  th:action="@{/editLogin}"  method="post">
-            <table>
-            <tr>
-                <td>Логин:</td>
-                <td><input type="text"  th:field="*{username}"></td>
-            </tr>
-            </table>
-            <input type="submit" value="Изменить Логин">
-        </form>
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-5">
+
+            <form    th:object="${user}" >
+
+                <form action="#" th:action="@{/editLogin}" th:object="${usernameError}" method="post">
+                    <p th:text="${usernameError}"/>
+                </form>
+
+                <form   th:action="@{/editLogin}"  method="post">
+                    <table>
+                        <tr>
+                            <td style="width: 100px; text-align: left">Логин:</td>
+                            <td ><input style="width: 250px" type="text"  th:field="*{username}"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th style="text-align: right"><input class="btn btn-primary" type="submit" value="Изменить Логин"></th>
+                        </tr>
+                    </table>
+
+                </form>
+                <!--    <div ng-app ="userDataApp" ng-controller="userDataCtrl">-->
+                <!--        <table>-->
+                <!--            <tr>-->
+                <!--                <td>Логин:</td>-->
+                <!--                <td><input type="text" id="username" th:field="*{username}"></td>-->
+                <!--            </tr>-->
+                <!--        </table>-->
+                <!--        <input type="button" ng-click="editLogin()"  value="Изменить Логин">-->
+                <!--    </div>-->
+
+                <form   th:action="@{/editPassword}"  method="post">
+                    <table>
+                        <tr>
+                            <td style="width: 100px; text-align: left">Пароль:</td>
+                            <td><input style="width: 250px" type="password" th:field="*{password}"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th style="text-align: right"> <input class="btn btn-primary" type="submit"  value="Изменить Password"></th>
+                        </tr>
+                    </table>
+                </form>
+
+                <form   th:action="@{/editData}"  method="post">
+                    <table>
+                        <tr>
+                            <td style="width: 100px; text-align: left">Полное имя:</td>
+                            <td><input style="width: 250px" type="text"  th:field="*{name}"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px; text-align: left">Номер тел.:</td>
+                            <td><input style="width: 250px" type="text" th:field="*{number}"></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 100px; text-align: left">Адресс:</td>
+                            <td><input style="width: 250px" type="text" th:field="*{address}"></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th style="text-align: right"> <input  class="btn btn-primary" type="submit"  value="Изменить данные"></th>
+                        </tr>
+
+                    </table>
+                </form>
+            </form>
+
+        </div>
+        <div class="col-sm-3">
+        </div>
+    </div>
+
+</div>
 
 
-        <form   th:action="@{/editPassword}"  method="post">
-            <table>
-            <tr>
-                <td>Password:</td>
-                <td><input type="password" th:field="*{password}"></td>
-            </tr>
-            </table>
-            <input type="submit"  value="Изменить Password">
-        </form>
+<div class="container-fluid">
+    <div class="row jumbotron">
+        <div class="col-xs-12 col=sm-12 col-md-9 col-lg-9 col-xl-10">
+            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа. Необходимость терять время за пустым столиком раздражает многих, особенно в обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать предзаказ и прийти в в наш ресторан, когда еда уже готова спецально для Вас. </p>
+        </div>
+        <div class="col-xs-12 col=sm-12 col-md-3 col-lg-3 col-xl-2">
+            <a href="#"><button class="btn btn-success btn-lg press" type="button">Читать далее</button></a>
+        </div>
+    </div>
+</div>
 
-    <form   th:action="@{/editData}"  method="post">
-    <table>
-             <tr>
-                 <td>Full Name:</td>
-                 <td><input type="text"  th:field="*{name}"></td>
-              </tr>
-            <tr>
-                <td>Number:</td>
-                <td><input type="text" th:field="*{number}"></td>
-            </tr>
-            <tr>
-                <td>Address:</td>
-                <td><input type="text" th:field="*{address}"></td>
-            </tr>
-    </table>
-    <input type="submit"  value="Изменить данные">
-    </form>
-</form>
+<div class="container-fluid ">
+    <div class="row text-center alert">
+        <div class="col-12">
+            <h3 class="display-4">Информация о партнерах</h3>
+        </div>
+        <hr>
+        <div class="col-12">
+            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем только свежие продукты отменного качества, в этом нам помогает компания Productar с многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми известные компании для достави еды Яндекс Еда и Delivery Club.</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="container-fluid padding">
+    <div class="row text-center padding">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
+            <h3>Яндекс Еда</h3>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px" src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
+            <h3>Delivery Club</h3>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px" src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
+            <h3>Productar</h3>
+        </div>
+
+    </div>
+</div>
+
+<!--<script>-->
+<!--          angular.module('userDataApp', []).controller('userDataCtrl',function($scope, $http) {-->
+
+
+
+<!--$scope.editLogin = function(){-->
+
+
+
+<!-- var data = document.getElementById("username").value;-->
+<!--       $http({-->
+<!--            method: 'POST',-->
+<!--            url: '/editLogin',-->
+<!--            data: data,-->
+<!--        }).then(function success(res){-->
+<!--        console.log(data);-->
+<!--        $scope.res = res.data;-->
+
+<!--        },-->
+<!--        function(res){-->
+<!--        console.log('not cool');-->
+<!--    }-->
+<!--        );-->
+<!--        }-->
+<!--});-->
+<!--</script>-->
 
 
 </body>

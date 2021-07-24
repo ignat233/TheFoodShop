@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.List;
 
@@ -46,6 +47,8 @@ public class UserController {
 
     }
 
+
+
     @GetMapping("/lk")
     public String lk(HttpServletRequest request){
         if(userService.findRoleByUsername(request.getUserPrincipal().getName()).equals(Collections.singleton(Role.ADMIN))) {
@@ -53,6 +56,12 @@ public class UserController {
         }
             return "redirect:/user";
     }
+
+//    @GetMapping("/lkData")
+//    public String lkData(HttpServletRequest request,Model model){
+//        model.addAttribute("user",userRepository.findByUsername(request.getUserPrincipal().getName()));
+//        return "lkUser";
+//    }
 
         @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/user")
@@ -63,7 +72,7 @@ public class UserController {
 
         @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/admin")
-    public String lkAdmin(Model model,Model model2){
+    public String lkAdmin(Model model){
         model.addAttribute("product",new Product());
         return "lkAdmin";
     }
@@ -73,37 +82,44 @@ public class UserController {
     @GetMapping("/users")
     @ResponseBody
     public List<User> showUsers(){
-    return userService.findAll();
+    return userRepository.findAllUser();
     }
 
-    @PostMapping("/delete")
-    public String deleteUser(@RequestBody String username){
-        System.out.println("0");
-        userService.deleteUser(username);
-        System.out.println("3");
-        return "redirect:/admin";
+    @PostMapping("/block")
+    @ResponseBody
+    public void blockUser(@RequestBody String username){
+        userService.blockOrUnblockUser(username);
     }
 
     @PostMapping("/editLogin")
-    public String editUser1(@ModelAttribute User user,Model model,HttpServletRequest request){
-        if (!userService.editUsername(user,request)) {
-            String usernameError = "Пользователь с таким логином уже существует";
-            model.addAttribute("usernameError", usernameError);
-            return "lkUser";
-        }
+    public String editUserLogin(@ModelAttribute User user,Model model,HttpServletRequest request){
+        if(!userService.editUsername(user,request)){
+        String usernameError = "Пользователь с таким логином уже существует";
+        model.addAttribute("usernameError", usernameError);
+        return "lkUser";
+    }
       return "redirect:/login";
 
     }
 
+    @GetMapping("/getUser")
+    @ResponseBody
+    public User getUser(HttpServletRequest request){
+        if(request.getUserPrincipal()==null) return null;
+        return userRepository.findByUsername(request.getUserPrincipal().getName());
+    }
+
+
+
     @PostMapping("/editPassword")
-    public String editUser(@ModelAttribute User user,Model model,HttpServletRequest request){
+    public String editUserPassword(@ModelAttribute User user,Model model,HttpServletRequest request){
         userService.editPassword(user,request);
         return "redirect:/login";
 
     }
 
     @PostMapping("/editData")
-    public String editData(@ModelAttribute User user,Model model,HttpServletRequest request){
+    public String editData(@ModelAttribute User user,HttpServletRequest request){
         userService.editData(user,request);
         return "redirect:/user";
     }
