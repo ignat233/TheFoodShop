@@ -2,8 +2,7 @@ package com.netcraker.services;
 
 import com.netcraker.model.Order;
 import com.netcraker.model.Product;
-import com.netcraker.model.ProductQty;
-import com.netcraker.model.User;
+import com.netcraker.model.ProductQuantity;
 import com.netcraker.repository.OrderRepository;
 import com.netcraker.repository.ProductRepository;
 import com.netcraker.repository.UserRepository;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -30,11 +28,12 @@ public class OrderService {
     private UserRepository userRepository;
 
     public void saveOrder(Order order, HttpServletRequest request){
-        Set<ProductQty> prdQty = order.getQty();
-        for(ProductQty productQty : prdQty){
-            productQty.setProduct(productRepository.findByName(productQty.getProduct().getName()));
-            productQty.setOrder(order);
+        Set<ProductQuantity> prdQty = order.getQty();
+        for(ProductQuantity productQuantity : prdQty){
+            productQuantity.setProduct(productRepository.findById(productQuantity.getProduct().getId()).get());
+            productQuantity.setOrder(order);
         }
+
         order.setCreateDate(LocalDateTime.now());
         orderRepository.save(order);
     }

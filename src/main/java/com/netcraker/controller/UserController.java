@@ -1,6 +1,7 @@
 package com.netcraker.controller;
 
 
+import com.netcraker.controller.massage.Massage;
 import com.netcraker.model.Product;
 import com.netcraker.model.Role;
 import com.netcraker.model.User;
@@ -8,12 +9,15 @@ import com.netcraker.repository.UserRepository;
 import com.netcraker.services.ProductService;
 import com.netcraker.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
 import javax.servlet.http.HttpServletRequest;
-import java.security.SecureRandom;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,17 +55,16 @@ public class UserController {
 
     @GetMapping("/lk")
     public String lk(HttpServletRequest request){
+        if(userRepository.findByUsername(request.getUserPrincipal().getName()) == null){
+            return "redirect:/login";
+        }
         if(userService.findRoleByUsername(request.getUserPrincipal().getName()).equals(Collections.singleton(Role.ADMIN))) {
             return "redirect:/admin";
         }
+
             return "redirect:/user";
     }
 
-//    @GetMapping("/lkData")
-//    public String lkData(HttpServletRequest request,Model model){
-//        model.addAttribute("user",userRepository.findByUsername(request.getUserPrincipal().getName()));
-//        return "lkUser";
-//    }
 
         @PreAuthorize("hasAuthority('USER')")
     @GetMapping("/user")
@@ -92,36 +95,37 @@ public class UserController {
     }
 
     @PostMapping("/editLogin")
-    public String editUserLogin(@ModelAttribute User user,Model model,HttpServletRequest request){
-        if(!userService.editUsername(user,request)){
-        String usernameError = "Пользователь с таким логином уже существует";
-        model.addAttribute("usernameError", usernameError);
-        return "lkUser";
-    }
-      return "redirect:/login";
+    public String editUserLogin(@RequestParam(required=false,name="login") String login, Model model, HttpServletRequest request){
+        if(!userService.editUsername(login,request)){
+        model.addAttribute("usernameError", Massage.loginError);
+       return "lkUser";
 
+        }
+        return "redirect:/login";
     }
+
 
     @GetMapping("/getUser")
     @ResponseBody
     public User getUser(HttpServletRequest request){
-        if(request.getUserPrincipal()==null) return null;
+        if(request.getUserPrincipal()==null) return new User();
         return userRepository.findByUsername(request.getUserPrincipal().getName());
     }
 
 
 
     @PostMapping("/editPassword")
-    public String editUserPassword(@ModelAttribute User user,Model model,HttpServletRequest request){
-        userService.editPassword(user,request);
-        return "redirect:/login";
+    public String editUserPassword(@RequestParam(required=false,name="password") String password,Model model,HttpServletRequest request){
+        userService.editPassword(password,request);
+        model.addAttribute("passwordMassage",Massage.passwordMassage);
+        return "lkUser";
 
     }
 
     @PostMapping("/editData")
-    public String editData(@ModelAttribute User user,HttpServletRequest request){
+    public String editData(@RequestBody User user,HttpServletRequest request){
         userService.editData(user,request);
-        return "redirect:/user";
+        return "lkUser";
     }
 }
 

@@ -4,17 +4,21 @@ import com.netcraker.model.Product;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product,Long> {
 
-    @Query(value = "SELECT * from product  where name=?1", nativeQuery = true)
+    Optional<Product> findById(Long id);
+
     Product findByName(String name);
 
-    @Query(value = "SELECT * from product  where id=?1", nativeQuery = true)
-    Product findProductById(Long id);
+    @Query(value = "SELECT * FROM product WHERE id IN :id",nativeQuery = true)
+    List<Product> findListProductsOfOrder(@Param("id") ArrayList<Long> id);
 
 }

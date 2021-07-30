@@ -1,8 +1,8 @@
 package com.netcraker.controller;
 
+import com.netcraker.controller.massage.Massage;
 import com.netcraker.model.Order;
 import com.netcraker.model.Product;
-import com.netcraker.model.User;
 import com.netcraker.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,14 +39,11 @@ public class ProductController {
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute Product product, Model model) {
         if (!productService.saveProduct(product)) {
-            String productMassage = "Такой продукт уже существует";
-            model.addAttribute("productMassage", productMassage);
+            model.addAttribute("productMassage", Massage.productNotAddMassage);
             return "adminProduct";
         }
 
-        String productMassage = "Продукт добавлен";
-        model.addAttribute("productMassage", productMassage);
-        return "adminProduct";
+        return "redirect:/adminProduct";
     }
 
     @GetMapping("/adminProduct")
@@ -58,13 +55,10 @@ public class ProductController {
     @PostMapping("/editProduct")
     public String editProduct(@ModelAttribute Product product, Model model){
         if(!productService.editProduct(product)) {
-            String productMassage = "Назавние продукта введено некоректно";
-            model.addAttribute("editMassage", productMassage);
+            model.addAttribute("editMassage", Massage.incorrectProductMassage);
             return "adminProduct";
         }
-        String productMassage = "Продукт отредактирован";
-        model.addAttribute("editMassage", productMassage);
-        return "adminProduct";
+        return "redirect:/adminProduct";
     }
 
 }

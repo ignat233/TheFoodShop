@@ -3,10 +3,7 @@ package com.netcraker.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -16,7 +13,6 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name = "order_id")
     private Long id;
 
     @ManyToOne
@@ -25,14 +21,8 @@ public class Order {
 
     @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
     @JsonProperty("quantity")
-    Set<ProductQty> quantity;
+    Set<ProductQuantity> quantity;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "order_product",
-//            joinColumns = @JoinColumn(name = "order_id"),
-//            inverseJoinColumns = @JoinColumn(name = "product_id"))
-//    private Set<Product> products;
 
     @Column(name = "create_date")
     private LocalDateTime createDate;
@@ -41,7 +31,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(User user, Set<ProductQty> qty, LocalDateTime createDate) {
+    public Order(User user, Set<ProductQuantity> qty, LocalDateTime createDate) {
         this.user = user;
         this.quantity= qty;
         this.createDate = createDate;
@@ -63,21 +53,13 @@ public class Order {
         this.user = user;
     }
 
-    public Set<ProductQty> getQty() {
+    public Set<ProductQuantity> getQty() {
         return quantity;
     }
 
-    public void setQty(Set<ProductQty> quantity) {
+    public void setQty(Set<ProductQuantity> quantity) {
         this.quantity = quantity;
     }
-
-//    public Set<Product> getProduct() {
-//        return products;
-//    }
-//
-//    public void setProduct(Set<Product> product) {
-//        this.products = product;
-//    }
 
     public LocalDateTime getCreateDate() {
         return createDate;
@@ -87,14 +69,5 @@ public class Order {
         this.createDate = createDate;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", user=" + user +
-                ", qty=" + quantity +
-//                ", products=" + products +
-                ", createDate=" + createDate +
-                '}';
-    }
+
 }

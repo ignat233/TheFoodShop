@@ -2,15 +2,15 @@ package com.netcraker.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.netcraker.model.embeddable.ProductQtyKey;
+import com.netcraker.model.embeddable.ProductQuantityKey;
 
 import javax.persistence.*;
 
 @Entity
-public class ProductQty {
+public class ProductQuantity {
 
     @EmbeddedId
-    private ProductQtyKey id = new ProductQtyKey();
+    private ProductQuantityKey id = new ProductQuantityKey();
 
     @ManyToOne
     @MapsId("orderId")
@@ -23,32 +23,32 @@ public class ProductQty {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    private Long qty;
+    private Long quantity;
 
-    public ProductQty(ProductQtyKey id, Order order, Product product, Long qty) {
+    public ProductQuantity(ProductQuantityKey id, Order order, Product product, Long quantity) {
         this.id = id;
         this.order = order;
         this.product = product;
-        this.qty = qty;
+        this.quantity = quantity;
     }
 
-    public ProductQty(  Order order, Product product, Long qty) {
+    public ProductQuantity(Order order, Product product, Long quantity) {
         this.order = order;
         this.product = product;
-        this.qty = qty;
+        this.quantity = quantity;
     }
 
-    public ProductQty() {
+    public ProductQuantity() {
 
     }
 
 
 
-    public ProductQtyKey getId() {
+    public ProductQuantityKey getId() {
         return id;
     }
 
-    public void setId(ProductQtyKey id) {
+    public void setId(ProductQuantityKey id) {
         this.id = id;
     }
 
@@ -68,12 +68,12 @@ public class ProductQty {
         this.product = product;
     }
 
-    public Long getQty() {
-        return qty;
+    public Long getQuantity() {
+        return quantity;
     }
 
-    public void setQty(Long qty) {
-        this.qty = qty;
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 
     @Override
@@ -82,7 +82,7 @@ public class ProductQty {
                 "id=" + id +
                 ", order=" + order +
                 ", product=" + product +
-                ", qty=" + qty +
+                ", quantity=" + quantity +
                 '}';
     }
 }

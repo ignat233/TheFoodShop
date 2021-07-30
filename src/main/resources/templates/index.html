@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+<html >
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+
     <title>The Food Shop</title>
     <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -10,7 +11,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
-<!--    <link rel="stylesheet" href="main.css">-->
 </head>
 <body>
 
@@ -75,9 +75,10 @@
                     <td style="padding-right: 10px">{{ x.name }}</td>
                     <td style="padding-right: 8px">{{ x.price }}р.</td>
                     <td><input type="image" style="width: 25px" ng-click="deleteInLocalStorage(x.id,x)"  ng-disabled="!dis(x)" src="https://image.flaticon.com/icons/png/512/1415/1415675.png"></td>
-                    <td style="padding-right: 8px"><input type="number" min="0" max="{{x.count}}"  id="{{$index}}" value={{qty(x.id)}} style="width: 55px; text-align: center" ></td>
-                    <td><input type="image" style="width: 25px" ng-click="putInLocalStorage(x.id,x,$index)" ng-disabled="dis(x)" src="https://image.flaticon.com/icons/png/512/3081/3081817.png"></td>
-                    <td>{{total($index,x.id,x.price)}}р.</td>
+                    <td style="padding-right: 8px"><input type="number" min="0" max="{{x.count}}"
+                                                         ng-model="x.quantity" id="{{$index}}" value={{quantity(x.id)}} style="width: 55px; text-align: center" ></td>
+                    <td><input type="image" style="width: 25px" ng-click="putInLocalStorage(x.id,x,$index)"  src="https://image.flaticon.com/icons/png/512/3081/3081817.png"></td>
+                    <td>{{total(x.quantity,x.price,x.id)}}р. </td>
                 </tr>
             </table>
         </div>
@@ -125,69 +126,12 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
             <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px" src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
-            <h3>Productar</h3>
+            <h3>Produktar</h3>
         </div>
     </div>
 </div>
 
-<script>
-    angular.module('indexApp', []).controller('indexCtrl',function($scope, $http) {
 
- $http({
-    method : "GET",
-      url : "/product"
-  }).then(
-            function(res) {
-$scope.products = res.data;
-            },
-            function(res) {
-                console.log("Error: " + res.status + " : " + res.data);
-                }
-  );
-  $scope.putInLocalStorage = function(id,product,index) {
-   var qtys = document.getElementById(index).value;
-  if( qtys !== 0){
-  product['qty'] = qtys;
-  localStorage.setItem(id,JSON.stringify(product));}
-  }
-
-  $scope.qty = function(index){
-  if(localStorage.getItem(index)==null) return 0;
-  else return JSON.parse(localStorage.getItem(index)).qty;
-  }
-
- $scope.deleteInLocalStorage = function(id,product){
- localStorage.removeItem(id);
-<!-- $('#block').html(entry)-->
- window.location.reload();
- }
-
- $scope.dis = function(prd){
-               keys = Object.keys(localStorage);
-            n = keys.length - 1;
-        while(n>=0){
-        if(JSON.parse(localStorage.getItem(keys[n])).id == prd.id){
-return true;
-        }
-         n--;
-         }
-return false;
- }
-
- $scope.total = function(index,id,price){
- if(localStorage.getItem(id)==null) return 0;
- else {
-     var qty = document.getElementById(index).value;
-return qty * price;
- }
- }
-
-
-
-});
-</script>
-
-
-
+<script type="text/javascript" src="js/index.js"></script>
 </body>
 </html>

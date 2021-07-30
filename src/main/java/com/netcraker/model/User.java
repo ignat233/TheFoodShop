@@ -11,7 +11,6 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Column(name = "user_id")
     private Long id;
 
     @ElementCollection(targetClass = Role.class,fetch = FetchType.LAZY)
@@ -25,7 +24,10 @@ public class User {
     @Column(name = "fullname")
     private String name;
     private String number;
+
+    @Column(name = "login")
     private String username;
+
     private String password;
     private String address;
 
@@ -100,17 +102,4 @@ public class User {
         this.roles = roles;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", role=" + roles +
-                ", active=" + active +
-                ", name='" + name + '\'' +
-                ", number='" + number + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
 }

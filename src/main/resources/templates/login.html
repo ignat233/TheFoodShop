@@ -17,7 +17,7 @@
 <!--Шапка-->
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div style="text-align: left; padding-left: 20px">
-        <a href="/login" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
+        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
     </div>
     <div style="margin:0 auto">
         <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
@@ -38,6 +38,8 @@
 <div th:if="${param.logout}">
     You have been logged out.
 </div>
+
+
 
     <form  action="/login" th:action="@{/login}" method="post">
         <table style="margin:0 auto">

@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+<html>
 <head>
     <title>myOrder</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+
     <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -10,9 +11,9 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 
-    <!--    <link rel="stylesheet" href="main.css">-->
 </head>
 <body>
+
 <!--Шапка-->
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div style="text-align: left; padding-left: 20px">
@@ -66,15 +67,15 @@
                     <td>{{order.createDate}}</td>
                     <td>
                         <ul>
-                            <li ng-repeat="prd in order.qty">
+                            <li ng-repeat="prd in order.quantity">
                                 {{prd.product.name}}
                             </li>
                         </ul>
                     </td>
                     <td>
                         <ul>
-                            <li ng-repeat="prd in order.qty">
-                                {{prd.qty}}
+                            <li ng-repeat="prd in order.quantity">
+                                {{prd.quantity}}
                             </li>
                         </ul>
                     </td>
@@ -134,23 +135,8 @@
 </div>
 
 
-<script>
-          angular.module('userOrderApp', []).controller('userOrderCtrl',function($scope, $http) {
+<script type="text/javascript" src="js/userOrder.js"></script>
 
- $http({
-    method : "GET",
-      url : "/showUserOrder"
-  }).then(
-            function(res) {
-$scope.orders = res.data;
-            },
-            function(res) {
-                console.log("Error: " + res.status + " : " + res.data);
-                }
-  );
-
-});
-</script>
 
 </body>
 </html>

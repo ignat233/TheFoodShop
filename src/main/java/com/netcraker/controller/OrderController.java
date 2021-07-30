@@ -2,8 +2,6 @@ package com.netcraker.controller;
 
 
 import com.netcraker.model.Order;
-import com.netcraker.model.ProductQty;
-import com.netcraker.repository.OrderRepository;
 import com.netcraker.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,11 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Array;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 public class OrderController {

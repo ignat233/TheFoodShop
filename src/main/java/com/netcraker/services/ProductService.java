@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -23,8 +24,7 @@ public class ProductService {
     }
 
     public boolean saveProduct(Product product) {
-        Product productFromDB = productRepository.findByName(product.getName());
-        if (productFromDB != null) {
+        if (productRepository.findByName(product.getName()) != null) {
             return false;
         }
         productRepository.save(product);
@@ -34,7 +34,7 @@ public class ProductService {
 
     public boolean editProduct(Product product){
         Product productFromDB = productRepository.findByName(product.getName());
-        if(productFromDB == null) return false;
+        if(productFromDB == null) {return false;}
         productFromDB.setCount(product.getCount());
         productFromDB.setPrice(product.getPrice());
         productRepository.save(productFromDB);

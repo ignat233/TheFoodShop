@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
     <meta name="viewport" charset="UTF-8">
     <title>Registration</title>
     <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -10,13 +11,12 @@
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-<!--    <link rel="stylesheet" href="main.css"></head>-->
-<body>
+<body ng-app="">
 
 <!--Шапка-->
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div style="text-align: left; padding-left: 20px">
-        <a href="/login" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
+        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
     </div>
     <div style="margin:0 auto">
         <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
@@ -33,18 +33,78 @@
 </form>
 
 
-
 <!--Регистрация-->
-<h3>Регистрация</h3>
-<!--<div ng-app="registerApp" ng-controller="registerCtrl">-->
-<form   th:action="@{/register}" th:object="${user}" method="post">
-<p>Full Name:<input type="text" th:field="*{name}"></p>
-<p>Login:<input type="text" th:field="*{username}"></p>
-<p>Password:<input type="password" th:field="*{password}"></p>
-<p>Number:<input type="text" th:field="*{number}"></p>
-<p>Address:<input type="text" th:field="*{address}"></p>
-<input type="submit"  value="Зарегистрироваться">
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-4">
+
+        </div>
+        <div class="col-sm-7">
+        <form   th:action="@{/register}" th:object="${user}" method="post" name="myForm" novalidate>
+
+    <h3 style="margin-left: 90px">Регистрация</h3>
+    <table>
+    <tr>
+        <td>Full Name:</td>
+        <td><input type="text"  name="name" ng-minlength="6" ng-model="name" placeholder="Иванов Иван"  th:field="*{name}" required></td>
+            <td><span style="color:red" ng-show=" myForm.name.$pristine || myForm.name.$dirty && myForm.name.$invalid ">
+                           <span ng-show="myForm.name.$error.minlength">Длина имени должна больше 5 символов</span>
+            <span ng-show="myForm.name.$error.required">*</span>
+            </span></td>
+    </tr>
+    <tr>
+        <td>Login:</td>
+        <td><input type="text" name="username" ng-minlength="6" ng-model="username" th:field="*{username}" required></td>
+        <td><span style="color:red" ng-show="myForm.username.$dirty && myForm.username.$invalid ||myForm.username.$pristine  ">
+                                       <span ng-show="myForm.username.$error.minlength">Длина логина должна больше 5 символов</span>
+            <span ng-show="myForm.username.$error.required">*</span></span></td>
+    </tr>
+    <tr>
+        <td>Password:</td>
+        <td><input type="password" name="password" ng-minlength="6" ng-model="password" th:field="*{password}" required></td>
+        <td><span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid ||myForm.password.$pristine ">
+                                       <span ng-show="myForm.password.$error.minlength">Длина пароля должна больше 5 символов</span>
+            <span ng-show="myForm.password.$error.required">*</span></span></td>
+
+    </tr>
+    <tr>
+        <td>Number:</td>
+        <td><input type="text" name="number" placeholder="89xxxxxxxxxx"  ng-model="number" pattern="[8]{1}[9]{1}[0-9]{9}" th:field="*{number}" required></td>
+        <td><span style="color:red" ng-show="myForm.number.$dirty && myForm.number.$invalid ||myForm.number.$pristine ">
+            <span ng-show="myForm.number.$error.required">*</span>
+         <span ng-show="myForm.number.$invalid">Введите телефон в правильном формате</span></span>
+       </td>
+    </tr>
+    <tr>
+        <td>Address:</td>
+        <td><input type="text" name="address"ng-minlength="6" ng-model="address" th:field="*{address}" required></td>
+        <td><span style="color:red" ng-show="myForm.address.$dirty myForm.address.$invalid||myForm.address.$pristine  ">
+                                       <span ng-show="myForm.address.$error.minlength">Длина адресса должна больше 5 символов</span>
+            <span ng-show="myForm.address.$error.required">*</span></span></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit" ng-disabled= "myForm.$invalid"
+                   style="width: 188px" class="btn btn-primary"  value="Зарегистрироваться" required>
+                   </td>
+    </tr>
+
+        <tr style="text-align: right">
+            <td></td>
+            <td>* Заполните поле</td>
+        </tr>
+
+
+
+</table>
 </form>
+        </div>
+        <div class="col-sm-1">
+        </div>
+    </div>
+</div>
 
 <div class="container-fluid">
     <div class="row jumbotron">
@@ -88,6 +148,7 @@
 
     </div>
 </div>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 
 
 </body>

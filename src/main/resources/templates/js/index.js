@@ -1,4 +1,8 @@
-angular.module('indexApp', []).controller('indexCtrl',function($scope, $http) {
+    angular.module('indexApp', []).controller('indexCtrl',function($scope, $http) {
+
+
+
+
 
  $http({
     method : "GET",
@@ -11,14 +15,22 @@ $scope.products = res.data;
                 console.log("Error: " + res.status + " : " + res.data);
                 }
   );
-  $scope.putInLocalStorage = function(id,product,qtys) {
-  if( !isNaN(qtys)){
-  product['qty'] = qtys;
+  $scope.putInLocalStorage = function(id,product,index) {
+   var qtys = document.getElementById(index).value;
+  if(qtys == '0'){ localStorage.removeItem(id);}
+  else{product['quantity'] = qtys;
   localStorage.setItem(id,JSON.stringify(product));}
+  }
+
+  $scope.quantity = function(index){
+  if(localStorage.getItem(index)==null) return 0;
+  else return JSON.parse(localStorage.getItem(index)).quantity;
   }
 
  $scope.deleteInLocalStorage = function(id,product){
  localStorage.removeItem(id);
+<!-- $('#block').html(entry)-->
+ window.location.reload();
  }
 
  $scope.dis = function(prd){
@@ -33,9 +45,10 @@ return true;
 return false;
  }
 
- $scope.total = function(qty,price){
- if(isNaN(qty)) return 0;
- else return qty * price;
+ $scope.total = function(quantity,price,index){
+if(!isNaN(quantity)){ return quantity * price;}
+ else if(localStorage.getItem(index)==null) return 0;
+  else return JSON.parse(localStorage.getItem(index)).quantity * price;
  }
 
 

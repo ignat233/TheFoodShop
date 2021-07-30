@@ -17,26 +17,16 @@ public class Product {
     private double price;
     private int count;
 
-//    @ManyToMany(mappedBy = "products")
-//    private Set<Order> order;
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     @JsonIgnore
-    Set<ProductQty> qty;
+    Set<ProductQuantity> qty;
 
-//    public Set<Order> getOrder() {
-//        return order;
-//    }
-//
-//    public void setOrder(Set<Order> order) {
-//        this.order = order;
-//    }
-
-    public Set<ProductQty> getQty() {
+    public Set<ProductQuantity> getQty() {
         return qty;
     }
 
-    public void setQty(Set<ProductQty> qty) {
+    public void setQty(Set<ProductQuantity> qty) {
         this.qty = qty;
     }
 

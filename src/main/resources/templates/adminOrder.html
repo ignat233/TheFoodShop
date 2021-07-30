@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+
     <title>Order</title>
     <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -59,7 +60,7 @@
                     <th>№ Заказа</th>
                     <th>Логин</th>
                     <th>Время заказа</th>
-                    <th>Продукты</th>
+                    <th >Продукты</th>
                     <th>Кол-во</th>
 
                 </tr>
@@ -71,15 +72,15 @@
                     <td>{{order.createDate}}</td>
                     <td>
                         <ul>
-                            <li ng-repeat="prd in order.qty">
+                            <li ng-repeat="prd in order.quantity">
                                 {{prd.product.name}}
                             </li>
                         </ul>
                     </td>
                     <td>
                         <ul>
-                            <li ng-repeat="prd in order.qty">
-                                {{prd.qty}}
+                            <li ng-repeat="prd in order.quantity">
+                                {{prd.quantity}}
                             </li>
                         </ul>
                     </td>
@@ -133,30 +134,13 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
             <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px" src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
-            <h3>Productar</h3>
+            <h3>Produktar</h3>
         </div>
 
     </div>
 </div>
 
-<script>
-          angular.module('adminOrderApp', []).controller('adminOrderCtrl',function($scope, $http) {
-
- $http({
-    method : "GET",
-      url : "/orders"
-  }).then(
-            function(res) {
-$scope.orders = res.data;
-            },
-            function(res) {
-                console.log("Error: " + res.status + " : " + res.data);
-                }
-  );
-
-});
-</script>
-
+<script type="text/javascript" src="js/adminOrder.js"></script>
 
 </body>
 </html>
