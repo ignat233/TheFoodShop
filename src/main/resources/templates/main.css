@@ -1,0 +1,51 @@
+
+
+.carousel-inner img{
+transform: translateY(-20%);
+height:100%;
+}
+@media(max-width: 450px) {
+.carousel-inner img{
+height:100%;
+width:100%;
+}
+}
+
+
+@media(max-width: 450px) {
+.carousel-caption .display-2 {
+    front-size: 3em;
+}
+}
+
+.jumbotron{
+padding: 1em;
+border-radius: 0;
+width: 70%;
+margin: 0 auto;
+padding-top: 20px;
+}
+
+.padding{
+padding-bottom: 2em;
+}
+
+.alert{
+width: 75%;
+margin: 0 auto;
+padding-top: 2em;
+}
+
+.alert hr{
+border-top: 2px solid #f0f0f0;
+width: 95%;
+margin-top: 0,3em;
+margin-bottom: 1em;
+}
+
+.press{
+width: 160px;
+}
+
+
+

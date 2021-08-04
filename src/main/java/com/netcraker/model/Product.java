@@ -1,6 +1,9 @@
 package com.netcraker.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "product")
@@ -8,17 +11,30 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private String name;
     private double price;
     private int count;
 
-    public int getId() {
+
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    @JsonIgnore
+    Set<ProductQuantity> qty;
+
+    public Set<ProductQuantity> getQty() {
+        return qty;
+    }
+
+    public void setQty(Set<ProductQuantity> qty) {
+        this.qty = qty;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,5 +60,15 @@ public class Product {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", count=" + count +
+                '}';
     }
 }

@@ -1,59 +1,57 @@
 package com.netcraker.model;
 
-
-
-import net.bytebuddy.implementation.bind.annotation.Default;
-
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "userscafe")
+
+
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
+
+    @ElementCollection(targetClass = Role.class,fetch = FetchType.LAZY)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
+
+    private boolean active;
 
 
-    private String role;
-
-    @Column(name="user_name")
+    @Column(name = "fullname")
     private String name;
     private String number;
-    private String login;
+
+    @Column(name = "login")
+    private String username;
+
     private String password;
     private String address;
 
-
-    public User(int id, String role, String name, String number, String login, String password, String address) {
-        this.id = id;
-        this.role = role;
-        this.name = name;
-        this.number = number;
-        this.login = login;
-        this.password = password;
-        this.address = address;
-    }
 
     public User() {
 
     }
 
 
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public boolean getActive() {
+        return active;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public String getName() {
@@ -72,12 +70,12 @@ public class User {
         this.number = number;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -95,4 +93,13 @@ public class User {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public Set<Role> getRole() {
+        return roles;
+    }
+
+    public void setRole(Set<Role> roles) {
+        this.roles = roles;
+    }
+
 }

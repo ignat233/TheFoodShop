@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
-<html >
+<html>
 <head>
+    <title>myOrder</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 
-    <title>The Food Shop</title>
     <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -17,7 +17,21 @@
 <!--Шапка-->
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div style="text-align: left; padding-left: 20px">
-        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
+        <!--        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ui class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a href="/lk" class="navbar-brad">Личный данные</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/userOrder" class="navbar-brad">Заказы</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" >Выход</a>
+                </li>
+            </ui>
+        </div>
     </div>
     <div style="margin:0 auto">
         <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
@@ -29,64 +43,52 @@
     </div>
 </nav>
 
-<!--Карусель-->
-<div  class="carousel slide" data-ride="carousel" id="slides">
-    <ul class="carousel-indicators">
-        <li data-target="#slides" data-slide-to="0" class="active"></li>
-        <li data-target="#slides" data-slide-to="1" ></li>
-        <li data-target="#slides" data-slide-to="2" ></li>
-    </ul>
-    <div class="carousel-inner" style="height: 500px" >
-        <div class="carousel-item active">
-            <img src="https://lifehacker.ru/wp-content/uploads/2017/02/cupofcoffee_1487243336.jpg">
-        </div>
-        <div class="carousel-item">
-            <img style="transform: translateY(-30%)" src="https://prorus.ru/_/manager/files/5e3/01f45eb02c/20170717-Ambar0001.jpg" >
-        </div>
-        <div class="carousel-item">
-<!--            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR49Gmx7PmDxT5KEdWYYIuQkm807tYdPddq3Q&usqp=CAU">-->
-            <img src="https://trattoria-rimini.ru/wp-content/uploads/2019/01/img_7083-2048x1365.jpg">
-       </div>
-    </div>
-</div>
 
 
-<!--Продукты-->
 <div class="container">
     <div class="row">
 
         <div class="col-sm-3">
 
         </div>
-        <div class="col-sm-6" ng-app ="indexApp" ng-controller="indexCtrl" >
-            <h3 style="text-align: center">Меню</h3>
-            <hr>
+        <div style="text-align: center" class="col-sm-6" ng-app ="userOrderApp" ng-controller="userOrderCtrl">
             <table>
                 <tr>
-                    <th>Название</th>
-                    <th>Цена</th>
-                    <th style="width: 35px"></th>
+                    <th>№ заказа</th>
+                    <th>Время заказа</th>
+                    <th>Продукты</th>
                     <th>Кол-во</th>
-                    <th style="width: 35px"></th>
-                    <th>Итог</th>
+
                 </tr>
 
-                <tr ng-repeat="x in products track by $index">
-                    <td style="padding-right: 10px">{{ x.name }}</td>
-                    <td style="padding-right: 8px">{{ x.price }}р.</td>
-                    <td><input type="image" style="width: 25px" ng-click="deleteInLocalStorage(x.id,x)"  ng-disabled="!dis(x)" src="https://image.flaticon.com/icons/png/512/1415/1415675.png"></td>
-                    <td style="padding-right: 8px"><input type="number" min="0" max="{{x.count}}"
-                                                         ng-model="x.quantity" id="{{$index}}" value={{quantity(x.id)}} style="width: 55px; text-align: center" ></td>
-                    <td><input type="image" style="width: 25px" ng-click="putInLocalStorage(x.id,x,$index)"  src="https://image.flaticon.com/icons/png/512/3081/3081817.png"></td>
-                    <td>{{total(x.quantity,x.price,x.id)}}р. </td>
+                <tr ng-repeat="order in orders track by $index">
+
+                    <td>{{$index + 1}}</td>
+                    <td>{{order.createDate}}</td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="prd in order.quantity">
+                                {{prd.product.name}}
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            <li ng-repeat="prd in order.quantity">
+                                {{prd.quantity}}
+                            </li>
+                        </ul>
+                    </td>
                 </tr>
             </table>
+
         </div>
         <div class="col-sm-3">
         </div>
     </div>
 
 </div>
+
 
 
 <div class="container-fluid">
@@ -126,12 +128,15 @@
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
             <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px" src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
-            <h3>Produktar</h3>
+            <h3>Productar</h3>
         </div>
+
     </div>
 </div>
 
 
-<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/userOrder.js"></script>
+
+
 </body>
 </html>
