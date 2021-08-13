@@ -1,73 +1,63 @@
+/*
+ * Copyright
+ */
+
 package com.netcraker.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
-
+/**
+ * Entity class describing the order of the user.
+ *
+ * @since 0.0.1
+ */
 @Entity
+@Getter
+@Setter
 @Table(name = "orders")
 public class Order {
 
+    /**
+     * Individual order number.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    /**
+     * The user who made the order.
+     */
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL)
-    @JsonProperty("quantity")
-    Set<ProductQuantity> quantity;
+    /**
+     * Set up the inverse references to ProductQuantity.
+     */
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonProperty("products")
+    private Set<ProductQuantity> products;
 
-
+    /**
+     * Time of ordering.
+     *
+     * @checkstyle MemberNameCheck (4 lines) Allow an uppercase letter in the field name.
+     */
     @Column(name = "create_date")
     private LocalDateTime createDate;
-
-
-    public Order() {
-    }
-
-    public Order(User user, Set<ProductQuantity> qty, LocalDateTime createDate) {
-        this.user = user;
-        this.quantity= qty;
-        this.createDate = createDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Set<ProductQuantity> getQty() {
-        return quantity;
-    }
-
-    public void setQty(Set<ProductQuantity> quantity) {
-        this.quantity = quantity;
-    }
-
-    public LocalDateTime getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(LocalDateTime createDate) {
-        this.createDate = createDate;
-    }
-
 
 }

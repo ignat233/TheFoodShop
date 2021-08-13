@@ -1,88 +1,59 @@
-package com.netcraker.model;
+/*
+ * Copyright
+ */
 
+package com.netcraker.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.netcraker.model.embeddable.ProductQuantityKey;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.*;
-
+/**
+ * Entity class describing the quantity of the product in the order.
+ * Entity class, which models the join table
+ * In this class we are using Many-to-Many Using a Composite Key "ProductQuantityKey".
+ *
+ * @since 0.0.1
+ */
 @Entity
+@Getter
+@Setter
 public class ProductQuantity {
 
+    /**
+     * Composite Key.
+     * Used @EmbeddedId to mark the primary key, which is an instance
+     * of the ProductQuantityKey class.
+     */
     @EmbeddedId
     private ProductQuantityKey id = new ProductQuantityKey();
 
+    /**
+     * User order.
+     */
     @ManyToOne
     @MapsId("orderId")
     @JoinColumn(name = "order_id")
     @JsonIgnore
     private Order order;
 
+    /**
+     * Product in order.
+     */
     @ManyToOne
     @MapsId("productId")
     @JoinColumn(name = "product_id")
     private Product product;
 
+    /**
+     * Quantity product.
+     */
     private Long quantity;
 
-    public ProductQuantity(ProductQuantityKey id, Order order, Product product, Long quantity) {
-        this.id = id;
-        this.order = order;
-        this.product = product;
-        this.quantity = quantity;
-    }
-
-    public ProductQuantity(Order order, Product product, Long quantity) {
-        this.order = order;
-        this.product = product;
-        this.quantity = quantity;
-    }
-
-    public ProductQuantity() {
-
-    }
-
-
-
-    public ProductQuantityKey getId() {
-        return id;
-    }
-
-    public void setId(ProductQuantityKey id) {
-        this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
-    @Override
-    public String toString() {
-        return "ProductQty{" +
-                "id=" + id +
-                ", order=" + order +
-                ", product=" + product +
-                ", quantity=" + quantity +
-                '}';
-    }
 }

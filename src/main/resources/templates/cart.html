@@ -1,31 +1,39 @@
 <!DOCTYPE html>
-<html >
+<html>
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 
     <meta name="viewport" charset="UTF-8">
     <title>Basket</title>
-    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
 </head>
 
 <!--Шапка-->
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div style="text-align: left; padding-left: 20px">
-        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
+        <a href="/lk" class="navbar-brad"><img style="width: 65px"
+                                               src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>
     </div>
     <div style="margin:0 auto">
-        <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
+        <a href="/index" class="navbar-brad"><img style="width: 65px"
+                                                  src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
     </div>
     <div style="text-align: right; padding-right: 20px">
         <form action="/cart" method="get">
-            <input type="image" style="width: 50px"  src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
+            <input type="image" style="width: 50px"
+                   src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
         </form>
     </div>
 </nav>
@@ -37,64 +45,75 @@
         <div class="col-sm-3">
         </div>
         <div class="col-sm-6">
-<h3 style="text-align: center">Корзина</h3>
+            <h3 style="text-align: center">Корзина</h3>
             <div class="alert">
                 <hr>
             </div>
-<div ng-app="basketApp"  ng-controller="basketCtrl">
+            <div ng-app="basketApp" ng-controller="basketCtrl">
 
 
+                <table style="margin:0 auto">
+                    <tr>
+                        <th>Название</th>
+                        <th style="padding-right: 5px">Цена</th>
+                        <th></th>
+                        <th style="padding-right: 5px;width: 70px;text-align:center">Кол-во</th>
+                        <th>Итог</th>
+                        <th style="width: 110px;text-align:center">Изм.кол-во</th>
 
-    <table style="margin:0 auto">
-        <tr>
-            <th>Название</th>
-            <th style="padding-right: 5px">Цена</th>
-            <th></th>
-            <th style="padding-right: 5px;width: 70px;text-align:center">Кол-во</th>
-            <th>Итог</th>
-            <th style="width: 110px;text-align:center">Изм.кол-во</th>
+                    </tr>
 
-        </tr>
+                    <tr ng-repeat="x in products track by $index">
+                        <td style="padding-right: 5px">{{ x.name }}</td>
+                        <td>{{ x.price }}р.</td>
+                        <td><input type="image" style="width: 35px"
+                                   ng-click="deleteInLocalStorage(x.id,x)" ng-disabled="!dis(x)"
+                                   title="Удалить товар" alt="Удалить товар"
+                                   src="https://image.flaticon.com/icons/png/512/1415/1415675.png">
+                        </td>
+                        <td style="text-align: center">{{x.quantity}}</td>
+                        <td> {{total(x.quantity,x.price)}}р.</td>
+                        <td><input type="image" style="width: 35px;transform: translateY(+15%)"
+                                   ng-click="putNewInLocalStorage(x.id,x,newQty)"
+                                   title="Изменить колличество товара на"
+                                   alt="Изменить колличество товара на"
+                                   src="https://i0.wp.com/agileety.com/wp-content/uploads/2016/02/cropped-Refresh_icon.png?fit=512%2C512&ssl=1">
+                            <input type="number" min="0" max="{{x.count}}" data-ng-model="newQty"
+                                   style="width: 45px;transform: translateY(-15%)"></td>
 
-        <tr ng-repeat="x in products track by $index" >
-            <td style="padding-right: 5px">{{ x.name }}</td>
-            <td>{{ x.price }}р.</td>
-            <td><input type="image" style="width: 35px" ng-click="deleteInLocalStorage(x.id,x)"  ng-disabled="!dis(x)" title="Удалить товар" alt="Удалить товар" src="https://image.flaticon.com/icons/png/512/1415/1415675.png"></td>
-            <td style="text-align: center">{{x.quantity}}</td>
-            <td> {{total(x.quantity,x.price)}}р.</td>
-            <td>  <input type="image" style="width: 35px;transform: translateY(+15%)" ng-click="putNewInLocalStorage(x.id,x,newQty)" title="Изменить колличество товара на"
-                         alt="Изменить колличество товара на" src="https://i0.wp.com/agileety.com/wp-content/uploads/2016/02/cropped-Refresh_icon.png?fit=512%2C512&ssl=1">
-                <input type="number" min="0" max="{{x.count}}"  data-ng-model="newQty"  style="width: 45px;transform: translateY(-15%)" ></td>
+                    </tr>
 
-        </tr>
+                    <tr>
 
-        <tr>
-
-            <td style="float:right">Cумма заказа:</td>
-            <th></th>
-            <th></th>
-            <th></th>
-            <td style="background-color: #FFC0CB; text-align: center">{{sum()}}р.</td>
-        </tr>
-    </table>
-    <div style="padding-bottom: 50px;text-align: right">
-        <input type="submit" class="btn btn-primary" ng-click="addOrder()" value="Оформить заказ">
-    </div>
-</div>
+                        <td style="float:right">Cумма заказа:</td>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <td style="background-color: #FFC0CB; text-align: center">{{sum()}}р.</td>
+                    </tr>
+                </table>
+                <div style="padding-bottom: 50px;text-align: right">
+                    <input type="submit" class="btn btn-primary" ng-click="addOrder()"
+                           value="Оформить заказ">
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-
 
 
 <div class="container-fluid">
     <div class="row jumbotron">
         <div class="col-xs-12 col=sm-12 col-md-9 col-lg-9 col-xl-10">
-            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа. Необходимость терять время за пустым столиком раздражает многих, особенно в обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать предзаказ и прийти в в наш ресторан, когда еда уже готова спецально для Вас. </p>
+            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа.
+                Необходимость терять время за пустым столиком раздражает многих, особенно в
+                обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать
+                предзаказ и прийти в в наш ресторан, когда еда уже готова спецально для Вас. </p>
         </div>
         <div class="col-xs-12 col=sm-12 col-md-3 col-lg-3 col-xl-2">
-            <a href="#"><button class="btn btn-success btn-lg press" type="button">Читать далее</button></a>
+            <a href="#">
+                <button class="btn btn-success btn-lg press" type="button">Читать далее</button>
+            </a>
         </div>
     </div>
 </div>
@@ -106,7 +125,11 @@
         </div>
         <hr>
         <div class="col-12">
-            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем только свежие продукты отменного качества, в этом нам помогает компания Productar с многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми известные компании для достави еды Яндекс Еда и Delivery Club.</p>
+            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем
+                только свежие продукты отменного качества, в этом нам помогает компания Productar с
+                многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и
+                заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми
+                известные компании для достави еды Яндекс Еда и Delivery Club.</p>
         </div>
 
     </div>
@@ -115,23 +138,179 @@
 <div class="container-fluid padding">
     <div class="row text-center padding">
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
+            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px"
+                                                                         src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
             <h3>Яндекс Еда</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px" src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
+            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px"
+                                                                                src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
             <h3>Delivery Club</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px" src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
+            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px"
+                                                                            src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
             <h3>Productar</h3>
         </div>
     </div>
 </div>
 
 
-
 <script type="text/javascript" src="js/cart.js"></script>
+
+<script>
+         function allStorage(){
+ var values = [];
+ keys = Object.keys(localStorage);
+ i = keys.length;
+
+ while ( i-- ) {
+ values.push( JSON.parse(localStorage.getItem(keys[i])) );
+ }
+ return values;
+ }
+
+ function allProductInOrder(){
+ var product = [];
+  n =allStorage().length -1;
+  while ( n>=0) {
+  product.push(allStorage()[n].id);
+  product.push(allStorage()[n].qty);
+  n--;
+  }
+  return product;
+ }
+
+  function qtyProductInOrder(){
+  var qty = [];
+   n =allStorage().length -1;
+   while ( n>=0 ) {
+   qty.push(allStorage()[n].qty);
+   n--;
+   }
+   return qty;
+  }
+
+  function quantity(){
+    var quantity = [];
+   n =allStorage().length -1;
+   while ( n>=0 ) {
+   qty = allStorage()[n].quantity;
+   var product = allStorage()[n]
+   delete product["quantity"];
+   var productQuantity = new Object();
+   productQuantity["product"] = product;
+   productQuantity["quantity"] =  qty;
+   quantity.push(productQuantity);
+   n--;
+   }
+   return quantity;
+  }
+
+
+ angular.module('basketApp', []).controller('basketCtrl',function($scope, $http) {
+
+
+
+
+        $scope.products = allStorage();
+        $scope.sum = function(){
+ var sum = 0;
+ n =allStorage().length -1;
+ while(n>=0){
+ sum += allStorage()[n].price * allStorage()[n].quantity;
+ n--;
+ }
+ return sum;
+ }
+
+   $scope.putNewInLocalStorage = function(id,product,qtys) {
+   if( !isNaN(qtys)) {
+   if(qtys==0){
+    localStorage.removeItem(id);
+  window.location.reload();
+   }
+   else{
+   product.quantity = qtys;
+   localStorage.setItem(id,JSON.stringify(product));}}
+   }
+
+  $scope.deleteInLocalStorage = function(id,product){
+  localStorage.removeItem(id);
+  window.location.reload();
+  }
+
+  $scope.dis = function(prd){
+                keys = Object.keys(localStorage);
+             n = keys.length - 1;
+         while(n>=0){
+         if(JSON.parse(localStorage.getItem(keys[n])).id == prd.id){
+ return true;
+         }
+          n--;
+          }
+ return false;
+  }
+
+  $scope.total = function(quantity,price){
+  if(isNaN(quantity)) return 0;
+  else return quantity * price;
+  }
+
+
+
+
+
+         $scope.addOrder = function(){
+
+            if(allProductInOrder().length == 0)  alert("Корзина пустая, добавьте товар");
+
+              else{
+               $http({
+              method : "GET",
+                url : "/getUser"
+            }).then(
+                      function(res) {
+          var user = res.data;
+          if(!user.active) alert("Войдите в систему,чтобы сделать заказ");
+          else{
+             var data =
+          {
+                            "user": user,
+                            "products": quantity(),
+                            "createDate": null
+                            }
+
+                           $http({
+                                method: 'POST',
+                                url: '/addOrder',
+                                data: data ,
+                            }).then(function success(res){
+                            localStorage.clear();
+                            location.reload();
+                            alert("Заказ оформлен и будет готов в течение 20 минут");
+                            $scope.res = res.data;
+
+                            },
+                            function(res){
+                            console.log('not cool');
+                        }
+                            );
+                            }
+                      },
+                      function(res) {
+                          console.log("Error: " + res.status + " : " + res.data);
+                          }
+            );
+
+
+                            }
+                            }
+
+ });
+
+
+</script>
 
 </body>
 </html>

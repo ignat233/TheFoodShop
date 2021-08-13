@@ -5,12 +5,17 @@
     <title>lkAdmin</title>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
-    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular-route.min.js"></script>
@@ -20,7 +25,8 @@
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div style="text-align: left; padding-left: 20px">
         <!--        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>-->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ui class="navbar-nav ml-auto">
                 <li class="nav-item active">
@@ -33,7 +39,7 @@
                     <a href="/adminOrder" class="navbar-brad">Заказы</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/logout" >Выход</a>
+                    <a href="/logout">Выход</a>
                 </li>
             </ui>
         </div>
@@ -41,11 +47,13 @@
 
 
     <div style="text-align: center">
-        <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
+        <a href="/index" class="navbar-brad"><img style="width: 65px"
+                                                  src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
     </div>
     <div style="text-align: right; padding-right: 20px">
         <form action="/cart" method="get">
-            <input type="image" style="width: 50px"  src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
+            <input type="image" style="width: 50px"
+                   src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
         </form>
     </div>
 </nav>
@@ -57,47 +65,50 @@
         <div class="col-sm-1">
 
         </div>
-        <div class="col-sm-10" ng-app ="adminApp" ng-controller="adminCtrl">
-    <table>
-        <tr>
-            <th>№ </th>
-            <th>Полное имя</th>
-            <th name="username">Логин</th>
-            <th>active</th>
-            <th>Номер телефона</th>
-            <th>Аресс</th>
-            <th></th>
-        </tr>
+        <div class="col-sm-11" ng-app="adminApp" ng-controller="adminCtrl">
+            <table>
+                <tr>
+                    <th>№</th>
+                    <th>Полное имя</th>
+                    <th name="username">Логин</th>
+                    <th>active</th>
+                    <th>Номер телефона</th>
+                    <th>Аресс</th>
+                    <th></th>
+                </tr>
 
-        <tr ng-repeat="x in users track by $index">
+                <tr ng-repeat="x in users track by $index">
 
-          <td>{{$index + 1}}</td>
-          <td>{{x.name}}</td>
-          <td name="username">{{x.username}}</td>
-          <td>{{x.active}}</td>
-          <td>{{x.number}}</td>
-          <td>{{x.address}}</td>
-          <td><input type="button" ng-click="blockUser(x.username)" class="btn btn-primary" value={{value(x.active)}}></td>
-        </tr>
-    </table>
+                    <td>{{$index + 1}}</td>
+                    <td>{{x.name}}</td>
+                    <td style="width: 130px" name="username">{{x.username}}</td>
+                    <td>{{x.active}}</td>
+                    <td>{{x.number}}</td>
+                    <td>{{x.address}}</td>
+                    <td><input type="button" ng-click="blockUser(x.username)"
+                               class="btn btn-primary" value={{value(x.active)}}></td>
+                </tr>
+            </table>
 
-</div>
-        <div class="col-sm-1">
         </div>
+
     </div>
 
 </div>
 
 
-
-
 <div class="container-fluid">
     <div class="row jumbotron">
         <div class="col-xs-12 col=sm-12 col-md-9 col-lg-9 col-xl-10">
-            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа. Необходимость терять время за пустым столиком раздражает многих, особенно в обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать предзаказ и прийти в в наш ресторан, когда еда уже готова спецально для Вас. </p>
+            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа.
+                Необходимость терять время за пустым столиком раздражает многих, особенно в
+                обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать
+                предзаказ и прийти в в наш ресторан, когда еда уже готова спецально для Вас. </p>
         </div>
         <div class="col-xs-12 col=sm-12 col-md-3 col-lg-3 col-xl-2">
-            <a href="#"><button class="btn btn-success btn-lg press" type="button">Читать далее</button></a>
+            <a href="#">
+                <button class="btn btn-success btn-lg press" type="button">Читать далее</button>
+            </a>
         </div>
     </div>
 </div>
@@ -110,7 +121,11 @@
         </div>
         <hr>
         <div class="col-12">
-            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем только свежие продукты отменного качества, в этом нам помогает компания Productar с многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми известные компании для достави еды Яндекс Еда и Delivery Club.</p>
+            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем
+                только свежие продукты отменного качества, в этом нам помогает компания Productar с
+                многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и
+                заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми
+                известные компании для достави еды Яндекс Еда и Delivery Club.</p>
         </div>
 
     </div>
@@ -119,22 +134,25 @@
 <div class="container-fluid padding">
     <div class="row text-center padding">
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
+            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px"
+                                                                         src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
             <h3>Яндекс Еда</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px" src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
+            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px"
+                                                                                src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
             <h3>Delivery Club</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px" src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
+            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px"
+                                                                            src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
             <h3>Productar</h3>
         </div>
 
     </div>
 </div>
 
-<script type="text/javascript" src="js/admin.js"></script>
+<!--<script type="text/javascript" src="js/admin.js"></script>-->
 
 <script>
             angular.module('adminApp', []).controller('adminCtrl',function($scope, $http) {
@@ -186,6 +204,9 @@ $scope.blockUser = function(username){
         else return "разблокировать пользователя";
         }
 });
+
+
+
 </script>
 
 </body>
