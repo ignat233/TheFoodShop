@@ -1,105 +1,74 @@
+/*
+ * Copyright
+ */
+
 package com.netcraker.model;
 
-import javax.persistence.*;
-import java.util.Set;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ * Entity class describing the user of the application.
+ *
+ * @since 0.0.1
+ */
 @Entity
+@Getter
+@Setter
 @Table(name = "userscafe")
-
-
 public class User {
 
+    /**
+     * Individual user number.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ElementCollection(targetClass = Role.class,fetch = FetchType.LAZY)
-    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    /**
+     * User activity. True allows logging in, false denies.
+     */
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
+    private Role role;
 
+    /**
+     * User activity.
+     */
     private boolean active;
 
-
+    /**
+     * User name.
+     */
     @Column(name = "fullname")
     private String name;
+
+    /**
+     * Phone number.
+     */
     private String number;
 
+    /**
+     * Login(username).
+     */
     @Column(name = "login")
     private String username;
 
+    /**
+     * Login password.
+     */
     private String password;
+
+    /**
+     * User address.
+     */
     private String address;
-
-
-    public User() {
-
-    }
-
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public boolean getActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Set<Role> getRole() {
-        return roles;
-    }
-
-    public void setRole(Set<Role> roles) {
-        this.roles = roles;
-    }
 
 }

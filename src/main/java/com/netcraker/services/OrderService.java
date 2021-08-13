@@ -1,53 +1,80 @@
+/*
+ * Copyright
+ */
+
 package com.netcraker.services;
 
 import com.netcraker.model.Order;
-import com.netcraker.model.Product;
 import com.netcraker.model.ProductQuantity;
 import com.netcraker.repository.OrderRepository;
 import com.netcraker.repository.ProductRepository;
-import com.netcraker.repository.UserRepository;
+import com.netcraker.services.method.FindAll;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
+/**
+ * Order Service.
+ * Using for providing functionality to the order's capabilities.
+ * The class extends the FindAll class.
+ *
+ * @since 0.0.1
+ */
 @Service
-public class OrderService {
+public class OrderService extends FindAll<Order, OrderRepository> {
 
+    /**
+     * OrderRepository field.
+     */
+    private final OrderRepository repository;
+
+    /**
+     * ProductRepository field.
+     */
     @Autowired
-    private OrderRepository orderRepository;
+    //@checkstyle MemberNameCheck (2 lines)
+    private ProductRepository productRepo;
 
-    @Autowired
-    private ProductRepository productRepository;
+    /**
+     * Dependency injection through the constructor.
+     *
+     * @param repository Order Repository
+     */
+    public OrderService(final OrderRepository repository) {
+        super(repository);
+        this.repository = repository;
+    }
 
-    @Autowired
-    private UserRepository userRepository;
-
-    public void saveOrder(Order order, HttpServletRequest request){
-        Set<ProductQuantity> prdQty = order.getQty();
-        for(ProductQuantity productQuantity : prdQty){
-            productQuantity.setProduct(productRepository.findById(productQuantity.getProduct().getId()).get());
+    /**
+     * The method saves the order to the database.
+     *
+     * @param order Order
+     * @param request Request
+     */
+    public void saveOrder(final Order order, final HttpServletRequest request) {
+        final Set<ProductQuantity> products = order.getProducts();
+        //@checkstyle LocalFinalVariableNameCheck (2 lines)
+        for (final ProductQuantity productQuantity : products) {
             productQuantity.setOrder(order);
+            productQuantity.setProduct(this.productRepo
+                .findByName(productQuantity.getProduct().getName())
+            );
         }
-
         order.setCreateDate(LocalDateTime.now());
-        orderRepository.save(order);
+        this.repository.save(order);
     }
 
-    public List<Order> findAllOrder(){
-        Iterable<Order> it = orderRepository.findAll();
-        ArrayList<Order> orders = new ArrayList<>();
-        it.forEach(e -> orders.add(e));
-
-        return orders;
+    /**
+     * The method finds all orders of the user.
+     *
+     * @param request Request
+     * @return Orders
+     */
+    public List<Order> findAllOrderOfUser(final HttpServletRequest request) {
+        return this.repository.findAllOrdersOfUser(request.getUserPrincipal().getName());
     }
 
-    public List<Order> findAllUsersOrder(HttpServletRequest request){
-        return orderRepository.findAllUsersOrders(request.getUserPrincipal().getName());
-    }
-
-    }
+}

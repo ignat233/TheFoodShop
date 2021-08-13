@@ -1,44 +1,75 @@
+/*
+ * Copyright
+ */
+
 package com.netcraker.services;
 
 import com.netcraker.model.Product;
 import com.netcraker.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.netcraker.services.method.FindAll;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+/**
+ * Product Service.
+ * Using for providing functionality to the product's capabilities.
+ * The class extends the FindAll class.
+ *
+ * @since 0.0.1
+ */
 @Service
-public class ProductService {
+public class ProductService extends FindAll<Product, ProductRepository> {
 
-    @Autowired
-    private ProductRepository productRepository;
+    /**
+     * ProductRepository field.
+     */
+    private final ProductRepository repository;
 
-    public List<Product> findAll() {
-        Iterable<Product> it = productRepository.findAll();
-        ArrayList<Product> products = new ArrayList<>();
-        it.forEach(e -> products.add(e));
-
-        return products;
+    /**
+     * Dependency injection through the constructor.
+     *
+     * @param repository Product Repository
+     */
+    public ProductService(final ProductRepository repository) {
+        super(repository);
+        this.repository = repository;
     }
 
-    public boolean saveProduct(Product product) {
-        if (productRepository.findByName(product.getName()) != null) {
-            return false;
+    /**
+     * The method saves the product to the database.
+     *
+     * @param product Product
+     * @return Boolean save
+     */
+    public boolean saveProduct(final Product product) {
+        final boolean save;
+        if (this.repository.findByName(product.getName()) == null) {
+            this.repository.save(product);
+            save = true;
+        } else {
+            this.repository.save(product);
+            save = false;
         }
-        productRepository.save(product);
-        return true;
-
+        return save;
     }
 
-    public boolean editProduct(Product product){
-        Product productFromDB = productRepository.findByName(product.getName());
-        if(productFromDB == null) {return false;}
-        productFromDB.setCount(product.getCount());
-        productFromDB.setPrice(product.getPrice());
-        productRepository.save(productFromDB);
-        return true;
+    /**
+     * The method changes the product.
+     *
+     * @param product Product
+     * @return Boolean edit
+     */
+    public boolean editProduct(final Product product) {
+        final Product prd = this.repository.findByName(product.getName());
+        final boolean edit;
+        if (prd == null) {
+            edit = false;
+        } else {
+            prd.setCount(product.getCount());
+            prd.setPrice(product.getPrice());
+            this.repository.save(prd);
+            edit = true;
+        }
+        return edit;
     }
 
 }

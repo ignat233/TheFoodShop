@@ -1,21 +1,30 @@
+/*
+ * Copyright
+ */
 package com.netcraker;
 
-import com.netcraker.model.Role;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
+/**
+ * Main class of the project.
+ * Suppress warning because class 'SpringBootStarter' may be without abstract method.
+ *
+ * @since 0.0.1
+ */
+@SuppressWarnings("PMD.AbstractClassWithoutAbstractMethod")
 @SpringBootApplication
-public class SpringBootStarter {
+public abstract class SpringBootStarter {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootStarter.class,args);
-
+    /**
+     * Entry point into the application.
+     * Suppress warning because it's entry point.
+     *
+     * @param args Arguments
+     */
+    @SuppressWarnings("PMD.ProhibitPublicStaticMethods")
+    public static void main(final String[] args) {
+        SpringApplication.run(SpringBootStarter.class, args);
     }
 
-//    public static void main(String[] args) {
-//        System.out.println(Role.ADMIN.toString());
-//        System.out.println(Role.ADMIN.getAuthority());
-//        System.out.println(Role.ADMIN.toString().equals(Role.ADMIN.getAuthority()));
-//    }
 }

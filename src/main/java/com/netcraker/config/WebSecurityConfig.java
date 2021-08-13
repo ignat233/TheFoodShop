@@ -1,5 +1,10 @@
+/*
+ * Copyright
+ */
+
 package com.netcraker.config;
 
+import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,63 +14,58 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
-
-
+/**
+ * Security Configuration.
+ *
+ * @since 0.0.1
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@SuppressWarnings("PMD.AvoidDuplicateLiterals")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * DataSource field.
+     */
     @Autowired
-    private DataSource dataSource;
+    private DataSource datasource;
 
-
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable()
-                .authorizeRequests()
-                .antMatchers("/register").not().fullyAuthenticated()
-                .antMatchers("/index","/product","/cart","/getUser").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutSuccessUrl("/index")
-                .permitAll();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-
-
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance())
-                .usersByUsernameQuery("SELECT login, password, active from userscafe where login=?")
-                .authoritiesByUsernameQuery("SELECT u.login, ur.roles from userscafe u inner join user_role ur on u.id=ur.user_id where login=?");
-    }
-
+    // @checkstyle DesignForExtensionCheck (4 lines) The method is not intended to be shared
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Override
+    protected final void configure(final HttpSecurity http) throws Exception {
+        http
+            .csrf()
+            .disable()
+            .authorizeRequests()
+            .antMatchers("/register").not().fullyAuthenticated()
+            .antMatchers("/index", "/product", "/cart", "/getUser").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/login")
+            .permitAll()
+            .and()
+            .logout()
+            .logoutSuccessUrl("/index")
+            .permitAll();
+    }
+
+    @Override
+    protected final void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication()
+            .dataSource(this.datasource)
+            .passwordEncoder(NoOpPasswordEncoder.getInstance())
+            .usersByUsernameQuery("SELECT login, password, active from userscafe where login=?")
+            .authoritiesByUsernameQuery("SELECT login, role from userscafe where login=?");
     }
 
 }

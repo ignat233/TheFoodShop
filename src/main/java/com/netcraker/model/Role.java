@@ -1,17 +1,18 @@
+/*
+ * Copyright
+ */
+
 package com.netcraker.model;
 
-import org.springframework.security.core.GrantedAuthority;
-
-public enum Role implements GrantedAuthority
-{
-    USER,ADMIN;
-
-    @Override
-    public String getAuthority()
-    {
-        return name();
-    }
-
-
+/**
+ * Enum with user roles.
+ *
+ * @since 0.0.1
+ */
+public enum Role {
+    /**
+     * User roles.
+     */
+    USER, ADMIN;
 }
 

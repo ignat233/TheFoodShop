@@ -4,22 +4,28 @@
     <title>Product</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 
-    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
 
     <!--    <link rel="stylesheet" href="main.css">-->
 </head>
-<body ng-app ="adminApp">
+<body>
 
 <!--Шапка-->
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div style="text-align: left; padding-left: 20px">
         <!--        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>-->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ui class="navbar-nav ml-auto">
                 <li class="nav-item active">
@@ -32,33 +38,34 @@
                     <a href="/adminOrder" class="navbar-brad">Заказы</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/logout" >Выход</a>
+                    <a href="/logout">Выход</a>
                 </li>
             </ui>
         </div>
     </div>
     <div style="text-align: center">
-        <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
+        <a href="/index" class="navbar-brad"><img style="width: 65px"
+                                                  src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
     </div>
     <div style="text-align: right; padding-right: 20px">
         <form action="/cart" method="get">
-            <input type="image" style="width: 50px"  src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
+            <input type="image" style="width: 50px"
+                   src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
         </form>
     </div>
 </nav>
 
 
+<form ng-app="adminApp" ng-controller="adminCtrl">
 
+    <div class="container">
+        <div class="row">
 
-<div class="container">
-    <div class="row">
+            <div class="col-sm-3">
 
-        <div class="col-sm-3">
+            </div>
 
-        </div>
-
-            <div class="col-sm-6"  >
-<form  ng-controller="adminCtrl">
+            <div class="col-sm-6">
                 <table>
                     <h3 style="text-align: center"> Продукты</h3>
                     <tr>
@@ -74,83 +81,137 @@
                         <td style="padding-right: 8px;text-align: center">{{ prd.count }}</td>
                     </tr>
                 </table>
-</form>
 
                 <h3 style="text-align: center">Добавление продуктов</h3>
-                <form action="#" th:action="@{/addProduct}"  th:object="${productMassage}" method="post">
+                <form action="#" th:action="@{/addProduct}" th:object="${productMassage}"
+                      method="post">
                     <p th:text="${productMassage}"/>
                 </form>
-                <form  name="productAddForm" novalidate   th:action="@{/addProduct}" th:object="${product}" method="post">
-                    <table >
-                    <tr>
-                        <th>Название:</th>
-                        <th><input type="text" style="text-align: center; width: 350px"  th:field="*{name}" name="product" ng-minlength="3" ng-model="product" pattern="[\A-Za-zА-Яа-яЁё ]{3,}" required></th>
-                        <th><span style="color:red" ng-show="productAddForm.product.$dirty productAddForm.product.$invalid||productAddForm.product.$pristine  ">
+                <form name="productAddForm" novalidate th:action="@{/addProduct}"
+                      th:object="${product}" method="post">
+                    <table>
+                        <tr>
+                            <th>Название:</th>
+                            <th><input type="text" style="text-align: center; width: 350px"
+                                       th:field="*{name}" name="product" ng-minlength="3"
+                                       ng-model="product" pattern="[\A-Za-zА-Яа-яЁё ]{3,}" required>
+                            </th>
+                            <th><span style="color:red"
+                                      ng-show="productAddForm.product.$dirty && productAddForm.product.$invalid || productAddForm.product.$pristine">
                                        <span ng-show="productAddForm.product.$error.minlength">Название продукта должно быть больше 2 символов</span>
-                          <span ng-show="productAddForm.product.$invalid && !productAddForm.product.$error.minlength && productAddForm.product.$dirty">Неккоректный ввод</span></span></th>
-                    </tr>
-                    </tr>
-                    <tr>
-                        <th>Цена:</th>
-                        <th><input type="number" min="0" style="text-align: center; width: 350px"  pattern="[0-9]{6}" th:field="*{price}"></th>
-                    </tr>
-                    <tr>
-                        <th>Кол-во:</th>
-                        <th><input type="number" min="0" style="text-align: center; width: 350px"  pattern="[0-9]{6}" th:field="*{count}"></th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th style="text-align: right"> <input type="submit" class="btn btn-primary" ng-disabled="productAddForm.$invalid" value="Добавить продукт"></th>
-                    </tr>
+                          <span ng-show="productAddForm.product.$invalid && !productAddForm.product.$error.minlength && productAddForm.product.$dirty">Неккоректный ввод</span></span>
+                            </th>
+                        </tr>
+                        </tr>
+                        <tr>
+                            <th>Цена:</th>
+                            <th><input type="number" min="0"
+                                       style="text-align: center; width: 350px" name="price"
+                                       ng-model="price" pattern="^[1-9]\d*(\,\d+)?$"
+                                       th:field="*{price}" required></th>
+                            <th><span style="color:red"
+                                      ng-show="productAddForm.price.$dirty && productAddForm.price.$invalid || productAddForm.price.$pristine">
+                            <span ng-show="productAddForm.price.$invalid && productAddForm.price.$dirty">Некоректный ввод</span></span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>Кол-во:</th>
+                            <th><input type="number" min="0"
+                                       style="text-align: center; width: 350px" name="count"
+                                       ng-model="count" pattern="[0-9]{1,}" th:field="*{count}"
+                                       required></th>
+                            <th><span style="color:red"
+                                      ng-show="productAddForm.count.$dirty && productAddForm.count.$invalid || productAddForm.count.$pristine">
+                            <span ng-show="productAddForm.count.$invalid && productAddForm.count.$dirty ">Некоректный ввод</span></span>
+                            </th>
+
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <th style="text-align: right"><input type="submit"
+                                                                 class="btn btn-primary"
+                                                                 ng-disabled="productAddForm.$invalid"
+                                                                 value="Добавить продукт"></th>
+                        </tr>
                     </table>
                 </form>
 
 
                 <h3 style="text-align: center"> Редактирование продукта</h3>
-                <form action="#" th:action="@{/editProduct}"  th:object="${editMassage}" method="post">
+                <form action="#" th:action="@{/editProduct}" th:object="${editMassage}"
+                      method="post">
                     <p th:text="${editMassage}"/>
                 </form>
 
-                <form th:action="@{/editProduct}" name="productEditForm" novalidate  th:object="${product}" method="post">
+                <form th:action="@{/editProduct}" name="productEditForm" novalidate
+                      th:object="${product}" method="post">
                     <table>
                         <tr>
                             <th>Продукт для ред:</th>
-                            <th><input type="text" style="text-align: center; width: 295px"  th:field="*{name}" name="productEdit" ng-minlength="3" ng-model="productEdit" pattern="[\A-Za-zА-Яа-яЁё ]{3,}" required></th>
-                            <th><span style="color:red" ng-show="productEditForm.productEdit.$dirty productEditForm.productEdit.$invalid||productEditForm.productEdit.$pristine  ">
+                            <th><input type="text" style="text-align: center; width: 295px"
+                                       th:field="*{name}" name="productEdit" ng-minlength="3"
+                                       ng-model="productEdit" pattern="[\A-Za-zА-Яа-яЁё ]{3,}"
+                                       required></th>
+                            <th><span style="color:red"
+                                      ng-show="productEditForm.productEdit.$dirty && productEditForm.productEdit.$invalid || productEditForm.productEdit.$pristine ">
                                        <span ng-show="productEditForm.productEdit.$error.minlength">Название продукта должно быть больше 2 символов</span>
-                            <span ng-show="productEditForm.productEdit.$invalid && !productEditForm.productEdit.$error.minlength && productEditForm.productEdit.$dirty">Неккоректный ввод</span></span></th>
+                            <span ng-show="productEditForm.productEdit.$invalid && !productEditForm.productEdit.$error.minlength && productEditForm.productEdit.$dirty ">Неккоректный ввод</span></span>
+                            </th>
                         </tr>
                         <tr>
                             <th>Цена:</th>
-                            <th><input type="number" min="0" style="text-align: center; width: 295px"  pattern="[0-9]{6}" th:field="*{price}"></th>
+                            <th><input type="number" min="0"
+                                       style="text-align: center; width: 295px" name="priceEdit"
+                                       ng-model="priceEdit" pattern="^[1-9]\d*(\.\d+)?$"
+                                       th:field="*{price}" required></th>
+                            <th><span style="color:red"
+                                      ng-show="productEditForm.priceEdit.$dirty && productEditForm.priceEdit.$invalid || productEditForm.priceEdit.$pristine">
+                            <span ng-show="productEditForm.priceEdit.$invalid && productEditForm.priceEdit.$dirty">Некоректный ввод</span></span>
+                            </th>
                         </tr>
                         <tr>
                             <th>Кол-во:</th>
-                            <th><input type="number" min="0" style="text-align: center; width: 295px" pattern="[0-9]{6}"  th:field="*{count}"></th>
+                            <th><input type="number" min="0"
+                                       style="text-align: center; width: 295px" name="countEdit"
+                                       ng-model="countEdit" pattern="[0-9]{1,}" th:field="*{count}"
+                                       required></th>
+                            <th><span style="color:red"
+                                      ng-show="productEditForm.countEdit.$dirty && productEditForm.countEdit.$invalid || productEditForm.countEdit.$pristine">
+                            <span ng-show="productEditForm.countEdit.$invalid && productEditForm.countEdit.$dirty">Некоректный ввод</span></span>
+                            </th>
+
                         </tr>
                         <tr>
                             <th></th>
-                            <th style="text-align: right" ><input type="submit" ng-disabled="productEditForm.$invalid" class="btn btn-primary" value="Изменить продукт"></th>
+                            <th style="text-align: right"><input type="submit"
+                                                                 ng-disabled="productEditForm.$invalid"
+                                                                 class="btn btn-primary"
+                                                                 value="Изменить продукт"></th>
                         </tr>
                     </table>
                 </form>
+
             </div>
-        <div class="col-sm-3">
+            <div class="col-sm-3">
+            </div>
         </div>
+
     </div>
-
-</div>
-
-
+</form>
 
 
 <div class="container-fluid">
     <div class="row jumbotron">
         <div class="col-xs-12 col=sm-12 col-md-9 col-lg-9 col-xl-10">
-            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа. Необходимость терять время за пустым столиком раздражает многих, особенно в обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать предзаказ и прийти в в наш ресторан, когда еда уже готова спецально для Вас. </p>
+            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа.
+                Необходимость терять время за пустым столиком раздражает многих, особенно в
+                обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать
+                предзаказ и прийти в наш ресторан, когда еда уже готова спецально для Вас. </p>
         </div>
         <div class="col-xs-12 col=sm-12 col-md-3 col-lg-3 col-xl-2">
-            <a href="#"><button class="btn btn-success btn-lg press" type="button">Читать далее</button></a>
+            <a href="#">
+                <button class="btn btn-success btn-lg press" type="button">Читать далее</button>
+            </a>
         </div>
     </div>
 </div>
@@ -163,7 +224,11 @@
         </div>
         <hr>
         <div class="col-12">
-            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем только свежие продукты отменного качества, в этом нам помогает компания Productar с многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми известные компании для достави еды Яндекс Еда и Delivery Club.</p>
+            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем
+                только свежие продукты отменного качества, в этом нам помогает компания Productar с
+                многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и
+                заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми
+                известные компании для достави еды Яндекс Еда и Delivery Club.</p>
         </div>
 
     </div>
@@ -172,24 +237,78 @@
 <div class="container-fluid padding">
     <div class="row text-center padding">
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
+            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px"
+                                                                         src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
             <h3>Яндекс Еда</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px" src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
+            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px"
+                                                                                src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
             <h3>Delivery Club</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px" src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
+            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px"
+                                                                            src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
             <h3>Productar</h3>
         </div>
 
     </div>
 </div>
 
-<script type="text/javascript" src="js/admin.js"></script>
+<!--<script type="text/javascript" src="js/admin.js"></script>-->
 
+<script>
+            angular.module('adminApp', []).controller('adminCtrl',function($scope, $http) {
 
+ $http({
+    method : "GET",
+      url : "/users"
+  }).then(
+            function(res) {
+$scope.users = res.data;
+            },
+            function(res) {
+                console.log("Error: " + res.status + " : " + res.data);
+                }
+  );
+
+ $http({
+    method : "GET",
+      url : "/product"
+  }).then(
+            function(res) {
+$scope.products = res.data;
+            },
+            function(res) {
+                console.log("Error: " + res.status + " : " + res.data);
+                }
+  );
+
+$scope.blockUser = function(username){
+ var data = username
+       $http({
+            method: 'POST',
+            url: '/block',
+            data: data,
+        }).then(function success(res){
+        console.log(data);
+        $scope.res = res.data;
+        location.reload();
+
+        },
+        function(res){
+        console.log('not cool');
+    }
+        );
+        }
+
+        $scope.value = function(active){
+        if(active == true) return "заблокировать пользователя";
+        else return "разблокировать пользователя";
+        }
+});
+
+</script>
 
 
 </body>

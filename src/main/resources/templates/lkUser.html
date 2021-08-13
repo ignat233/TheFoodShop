@@ -2,23 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Lk Data</title>
-    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <meta name="viewport" http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+          crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
-            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
 
 </head>
-<body >
+<body>
 
 
 <!--Шапка-->
 <nav class="navbar navbar-expand-mb navbar-light bg-light sticky-top">
     <div style="text-align: left; padding-left: 20px">
-        <!--        <a href="/lk" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/4838/4838438.png"></a>-->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ui class="navbar-nav ml-auto">
                 <li class="nav-item active">
@@ -28,80 +33,93 @@
                     <a href="/userOrder" class="navbar-brad">Заказы</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/logout" >Выход</a>
+                    <a href="/logout">Выход</a>
                 </li>
             </ui>
         </div>
     </div>
     <div style="margin:0 auto">
-        <a href="/index" class="navbar-brad"><img style="width: 65px" src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
+        <a href="/index" class="navbar-brad"><img style="width: 65px"
+                                                  src="https://image.flaticon.com/icons/png/512/3081/3081920.png"></a>
     </div>
     <div style="text-align: right; padding-right: 20px">
         <form action="/cart" method="get">
-            <input type="image" style="width: 50px"  src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
+            <input type="image" style="width: 50px"
+                   src="https://image.flaticon.com/icons/png/512/3081/3081905.png">
         </form>
     </div>
 </nav>
 
 
-
 <form ng-app="userApp" ng-controller="userCtrl">
-<div class="container">
-    <div class="row">
+    <div class="container">
+        <div class="row">
 
-        <div class="col-sm-4">
+            <div class="col-sm-4">
 
-        </div>
-        <div class="col-sm-8">
+            </div>
+            <div class="col-sm-8">
 
 
-                <form  th:object="${usernameError}" method="post">
+                <form th:object="${usernameError}" method="post">
                     <p th:text="${usernameError}"/>
                 </form>
 
-                <form th:action="@{/editLogin}" name="logForm" novalidate    method="post">
+                <form th:action="@{/editLogin}" name="logForm" novalidate method="post">
                     <table>
                         <tr>
                             <td style="width: 100px; text-align: left">Логин:</td>
-                            <td ><input style="width: 250px" name="login" ng-model="login" ng-minlength="6"  type="text"   required></td>
-                            <td><span style="color:red" ng-show="logForm.login.$dirty && logForm.login.$invalid ||logForm.login.$pristine  ">
+                            <td><input style="width: 250px" name="login" ng-model="login"
+                                       ng-minlength="6" type="text" required></td>
+                            <td><span style="color:red"
+                                      ng-show="logForm.login.$dirty && logForm.login.$invalid ||logForm.login.$pristine  ">
                                 <span ng-show="logForm.login.$error.minlength">Длина логина должна больше 5 символов</span>
                                 <span ng-show="logForm.login.$error.required">*</span></span></td>
                         </tr>
                         <tr>
                             <th></th>
                             <th style="text-align: right"><input class="btn btn-primary"
-                                                                 ng-disabled="logForm.$invalid"  type="submit" value="Изменить Логин"></th>
+                                                                 ng-disabled="logForm.$invalid"
+                                                                 type="submit"
+                                                                 value="Изменить Логин"></th>
                         </tr>
                     </table>
 
 
                 </form>
-            <form  th:object="${passwordMassage}" method="post">
-                <p th:text="${passwordMassage}"/>
-            </form>
+                <form th:object="${passwordMassage}" method="post">
+                    <p th:text="${passwordMassage}"/>
+                </form>
 
-                <form  th:action="@{/editPassword}"  name="pasForm" novalidate method="post">
+                <form th:action="@{/editPassword}" name="pasForm" novalidate method="post">
                     <table>
                         <tr>
                             <td style="width: 100px; text-align: left">Пароль:</td>
-                            <td><input ng-minlength="6" name="password" ng-model="password" style="width: 250px" type="password" required></td>
-                        <td><span style="color:red" ng-show="pasForm.password.$dirty && pasForm.password.$invalid ||pasForm.password.$pristine ">
-                                       <span ng-show="pasForm.password.$error.minlength">Длина пароля должна больше 5 символов</span></span></td>
+                            <td><input ng-minlength="6" name="password" ng-model="password"
+                                       style="width: 250px" type="password" required></td>
+                            <td><span style="color:red"
+                                      ng-show="pasForm.password.$dirty && pasForm.password.$invalid ||pasForm.password.$pristine ">
+                                       <span ng-show="pasForm.password.$error.minlength">Длина пароля должна больше 5 символов</span></span>
+                            </td>
                         </tr>
                         <tr>
                             <th></th>
-                            <th style="text-align: right"> <input class="btn btn-primary" ng-disabled="pasForm.$invalid" type="submit"  value="Изменить Password"></th>
+                            <th style="text-align: right"><input class="btn btn-primary"
+                                                                 ng-disabled="pasForm.$invalid"
+                                                                 type="submit"
+                                                                 value="Изменить Password"></th>
                         </tr>
                     </table>
                 </form>
                 <form></form>
-                <form   name="myForm" novalidate  method="post">
+                <form name="myForm" novalidate method="post">
                     <table>
                         <tr>
-                            <td style="width: 100px; text-align: left" >Полное имя:</td>
-                            <td><input style="width: 250px" type="text"  name="name" ng-minlength="6" ng-model="name"  required></td>
-                            <td><span style="color:red" ng-show=" myForm.name.$pristine || myForm.name.$dirty && myForm.name.$invalid ">
+                            <td style="width: 100px; text-align: left">Полное имя:</td>
+                            <td><input style="width: 250px" type="text" name="name" ng-minlength="6"
+                                       ng-model="name" required></td>
+                            <td><span style="color:red"
+                                      ng-show=" myForm.name.$pristine || myForm.name.$dirty && myForm.name.$invalid ">
                            <span ng-show="myForm.name.$error.minlength">Длина имени должна больше 5 символов</span>
             <span ng-show="myForm.name.$error.required">*</span>
             </span></td>
@@ -109,16 +127,21 @@
 
                         <tr>
                             <td style="width: 100px; text-align: left">Номер тел:</td>
-                            <td><input style="width: 250px" type="text"  name="number"   ng-model="number" pattern="[8]{1}[9]{1}[0-9]{9}" required ></td>
-                            <td><span style="color:red" ng-show="myForm.number.$dirty && myForm.number.$invalid ||myForm.number.$pristine ">
+                            <td><input style="width: 250px" type="text" name="number"
+                                       ng-model="number" pattern="[8]{1}[9]{1}[0-9]{9}" required>
+                            </td>
+                            <td><span style="color:red"
+                                      ng-show="myForm.number.$dirty && myForm.number.$invalid ||myForm.number.$pristine ">
             <span ng-show="myForm.number.$error.required">*</span>
          <span ng-show="myForm.number.$invalid">Введите телефон в правильном формате</span></span>
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 100px; text-align: left">Адрес:</td>
-                            <td><input style="width: 250px" type="text"  name="address"ng-minlength="6" ng-model="address" required ></td>
-                            <td><span style="color:red" ng-show="myForm.address.$dirty myForm.address.$invalid||myForm.address.$pristine  ">
+                            <td><input style="width: 250px" type="text" name="address"
+                                       ng-minlength="6" ng-model="address" required></td>
+                            <td><span style="color:red"
+                                      ng-show="myForm.address.$dirty myForm.address.$invalid||myForm.address.$pristine  ">
                                        <span ng-show="myForm.address.$error.minlength">Длина адреса должна больше 5 символов</span>
             <span ng-show="myForm.address.$error.required">*</span></span></td>
                         </tr>
@@ -126,7 +149,11 @@
                         </tr>
                         <tr>
                             <th></th>
-                            <th style="text-align: right"> <input  class="btn btn-primary" ng-click="editData(name,number,address)" ng-disabled="myForm.$invalid" type="submit"  value="Изменить данные"></th>
+                            <th style="text-align: right"><input class="btn btn-primary"
+                                                                 ng-click="editData(name,number,address)"
+                                                                 ng-disabled="myForm.$invalid"
+                                                                 type="submit"
+                                                                 value="Изменить данные"></th>
                         </tr>
                         <tr style="text-align: right">
                             <td></td>
@@ -137,20 +164,25 @@
                 </form>
 
 
+            </div>
+            <div class="col-sm-0">
+            </div>
         </div>
-        <div class="col-sm-0">
-        </div>
-    </div>
 
-</div>
+    </div>
 </form>
 <div class="container-fluid">
     <div class="row jumbotron">
         <div class="col-xs-12 col=sm-12 col-md-9 col-lg-9 col-xl-10">
-            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа. Необходимость терять время за пустым столиком раздражает многих, особенно в обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать предзаказ и прийти в в наш ресторан, когда еда уже готова спецально для Вас. </p>
+            <p class="lead">Неизбежный атрибут любого посещения ресторана – ожидание заказа.
+                Необходимость терять время за пустым столиком раздражает многих, особенно в
+                обеденный перерыв, когда на счету каждая минута. В The Food Shop вы можете сделать
+                предзаказ и прийти в в наш ресторан, когда еда уже готова спецально для Вас. </p>
         </div>
         <div class="col-xs-12 col=sm-12 col-md-3 col-lg-3 col-xl-2">
-            <a href="#"><button class="btn btn-success btn-lg press" type="button">Читать далее</button></a>
+            <a href="#">
+                <button class="btn btn-success btn-lg press" type="button">Читать далее</button>
+            </a>
         </div>
     </div>
 </div>
@@ -162,7 +194,11 @@
         </div>
         <hr>
         <div class="col-12">
-            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем только свежие продукты отменного качества, в этом нам помогает компания Productar с многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми известные компании для достави еды Яндекс Еда и Delivery Club.</p>
+            <p class="lead">Мы работаем только с проверенными команиями, для готовки мы используем
+                только свежие продукты отменного качества, в этом нам помогает компания Productar с
+                многолетней историей. В нашем ресторане вы можете сделать не только предзаказ, но и
+                заказ домой, на работу или в любое удобное для Вас место, а в этом помогают,всеми
+                известные компании для достави еды Яндекс Еда и Delivery Club.</p>
         </div>
 
     </div>
@@ -171,23 +207,67 @@
 <div class="container-fluid padding">
     <div class="row text-center padding">
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px" src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
+            <i class="fas fa-code"><a href="https://eda.yandex.ru/"><img style="width: 50px"
+                                                                         src="https://upload.wikimedia.org/wikipedia/commons/c/ca/%D0%98%D0%BA%D0%BE%D0%BD%D0%BA%D0%B0_%D0%AF%D0%BD%D0%B4%D0%B5%D0%BA%D1%81.%D0%95%D0%B4%D1%8B.png"></a></i>
             <h3>Яндекс Еда</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px" src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
+            <i class="fas fa-bold"><a href="https://www.delivery-club.ru/"><img style="width: 50px"
+                                                                                src="https://pbs.twimg.com/profile_images/1341752643207704577/tiPcGc-a.jpg"></a></i>
             <h3>Delivery Club</h3>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-4">
-            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px" src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
+            <i class="fas fa-bold"><a href="https://www.produktar.ru/"><img style="width: 170px"
+                                                                            src="https://static.wixstatic.com/media/6a5223_9cb10d8dfd8344f0a7cd8cb7ed1cc677~mv2.png/v1/fill/w_339,h_97,al_c,q_85,usm_0.33_1.00_0.00/produktar_logo.webp"></a></i>
             <h3>Produktar</h3>
         </div>
 
     </div>
 </div>
 
-<script type="text/javascript" src="js/lkUser.js"></script>
+<!--<script type="text/javascript" src="js/lkUser.js"></script>-->
 
+<script>
+                  angular.module('userApp', []).controller('userCtrl',function($scope, $http) {
+
+ $http({
+    method : "GET",
+      url : "/getUser"
+  }).then(
+            function(res) {
+    var user = res.data;
+$scope.login = user.username;
+$scope.name = user.name;
+$scope.number = user.number;
+$scope.address = user.address;
+            },
+            function(res) {
+                console.log("Error: " + res.status + " : " + res.data);
+                }
+  );
+
+$scope.editData = function(name,number,address){
+var data ={
+"name": name,
+"number": number,
+"address": address
+}
+                           $http({
+                                method: 'POST',
+                                url: '/editData',
+                                data: data,
+                            }).then(function success(res){
+                                    $scope.res = res.data;
+                            },
+                            function(res){
+                            console.log('not cool');
+                        }
+                            );
+}
+
+});
+
+</script>
 
 </body>
 </html>

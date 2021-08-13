@@ -6,7 +6,7 @@
   }).then(
             function(res) {
     var user = res.data;
-$scope.username = user.username;
+$scope.login = user.username;
 $scope.name = user.name;
 $scope.number = user.number;
 $scope.address = user.address;

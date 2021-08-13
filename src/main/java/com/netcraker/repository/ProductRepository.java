@@ -1,24 +1,36 @@
+/*
+ * Copyright
+ */
+
 package com.netcraker.repository;
 
 import com.netcraker.model.Product;
-
-import org.springframework.data.jpa.repository.Query;
+import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
+/**
+ * Repository providing methods for Product Services.
+ *
+ * @since 0.0.1
+ */
 @Repository
-public interface ProductRepository extends CrudRepository<Product,Long> {
+public interface ProductRepository extends CrudRepository<Product, Long> {
 
+    /**
+     * The method finds product with the id.
+     *
+     * @param id Id
+     * @return Product
+     */
     Optional<Product> findById(Long id);
 
+    /**
+     * The method finds user with the name.
+     *
+     * @param name Name
+     * @return Product
+     */
     Product findByName(String name);
-
-    @Query(value = "SELECT * FROM product WHERE id IN :id",nativeQuery = true)
-    List<Product> findListProductsOfOrder(@Param("id") ArrayList<Long> id);
 
 }
