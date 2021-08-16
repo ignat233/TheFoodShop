@@ -9,7 +9,6 @@ import com.netcraker.model.Order;
 import com.netcraker.model.Product;
 import com.netcraker.services.ProductService;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,8 +30,16 @@ public class ProductController {
     /**
      * ProductService field.
      */
-    @Autowired
-    private ProductService service;
+    private final ProductService service;
+
+    /**
+     * Dependency injection through the constructor.
+     *
+     * @param service ProductService
+     */
+    ProductController(final ProductService service) {
+        this.service = service;
+    }
 
     /**
      * Get main page with menu.
@@ -74,15 +81,17 @@ public class ProductController {
      * @param product Product
      * @param model Model
      * @return AdminProduct.html or redirect:/adminProduct.
-     * @checkstyle ReturnCountCheck (5 lines) The method is allowed to have more than one return.
      */
     @PostMapping("/addProduct")
     public String addProduct(@ModelAttribute final Product product, final Model model) {
-        if (!this.service.saveProduct(product)) {
+        final String page;
+        if (this.service.saveProduct(product)) {
+            page = "redirect:/adminProduct";
+        } else {
             model.addAttribute("productMassage", Massage.PRODUCT_NOT_ADD.getMassage());
-            return "adminProduct";
+            page = "adminProduct";
         }
-        return "redirect:/adminProduct";
+        return page;
     }
 
     /**
@@ -104,15 +113,17 @@ public class ProductController {
      * @param product Product
      * @param model Model
      * @return AdminProduct.html or redirect:/adminProduct.
-     * @checkstyle ReturnCountCheck (5 lines) The method is allowed to have more than one return.
      */
     @PostMapping("/editProduct")
     public String editProduct(@ModelAttribute final Product product, final Model model) {
-        if (!this.service.editProduct(product)) {
+        final String page;
+        if (this.service.editProduct(product)) {
+            page = "redirect:/adminProduct";
+        } else {
             model.addAttribute("editMassage", Massage.INCORRECT_PRODUCT.getMassage());
-            return "adminProduct";
+            page = "adminProduct";
         }
-        return "redirect:/adminProduct";
+        return page;
     }
 
 }

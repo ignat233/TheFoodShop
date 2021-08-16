@@ -12,7 +12,6 @@ import com.netcraker.repository.UserRepository;
 import com.netcraker.services.UserService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,14 +36,23 @@ public class UserController {
     /**
      * UserService field.
      */
-    @Autowired
-    private UserService service;
+    private final UserService service;
 
     /**
      * UserRepository field.
      */
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    /**
+     * Dependency injection through the constructor.
+     *
+     * @param service UserService
+     * @param repository UserRepository
+     */
+    UserController(final UserService service, final UserRepository repository) {
+        this.service = service;
+        this.repository = repository;
+    }
 
     /**
      * Get registration window.
@@ -65,15 +73,17 @@ public class UserController {
      * @param user User
      * @param model Model
      * @return Register.html or redirect:/login.
-     * @checkstyle ReturnCountCheck (5 lines) The method is allowed to have more than one return.
      */
     @PostMapping("/register")
     public String addUser(@ModelAttribute final User user, final Model model) {
-        if (!this.service.saveUser(user)) {
+        final String page;
+        if (this.service.saveUser(user)) {
+            page = "redirect:/login";
+        } else {
             model.addAttribute("usernameError", Massage.LOGIN_ERROR.getMassage());
-            return "register";
+            page = "register";
         }
-        return "redirect:/login";
+        return page;
     }
 
     /**
@@ -82,17 +92,19 @@ public class UserController {
      *
      * @param request Request
      * @return Redirect:/login or redirect:/admin or redirect:/user
-     * @checkstyle ReturnCountCheck (5 lines) The method is allowed to have more than one return.
      */
     @GetMapping("/lk")
     public String lkRedirect(final HttpServletRequest request) {
+        final String page;
         if (this.repository.findByUsername(request.getUserPrincipal().getName()) == null) {
-            return "redirect:/login";
+            page = "redirect:/login";
+        } else if (this.service
+            .findRoleByLogin(request.getUserPrincipal().getName()).equals(Role.ADMIN)) {
+            page = "redirect:/admin";
+        } else {
+            page = "redirect:/user";
         }
-        if (this.service.findRoleByLogin(request.getUserPrincipal().getName()).equals(Role.ADMIN)) {
-            return "redirect:/admin";
-        }
-        return "redirect:/user";
+        return page;
     }
 
     /**
@@ -149,17 +161,19 @@ public class UserController {
      * @param model Model
      * @param request Request
      * @return If the login is changed then redirect:/login, else return lkUser.html
-     * @checkstyle ReturnCountCheck (5 lines) The method is allowed to have more than one return.
      */
     @PostMapping("/editLogin")
     public String editUserLogin(
         @RequestParam(required = false, name = "login") final String login,
         final Model model, final HttpServletRequest request) {
-        if (!this.service.editUsername(login, request)) {
+        final String page;
+        if (this.service.editUsername(login, request)) {
+            page = "redirect:/login";
+        } else {
             model.addAttribute("usernameError", Massage.LOGIN_ERROR.getMassage());
-            return "lkUser";
+            page = "lkUser";
         }
-        return "redirect:/login";
+        return page;
     }
 
     /**
@@ -167,15 +181,17 @@ public class UserController {
      *
      * @param request Request
      * @return User
-     * @checkstyle ReturnCountCheck (5 lines) The method is allowed to have more than one return.
      */
     @GetMapping("/getUser")
     @ResponseBody
     public User getUser(final HttpServletRequest request) {
+        final User user;
         if (request.getUserPrincipal() == null) {
-            return new User();
+            user = new User();
+        } else {
+            user = this.repository.findByUsername(request.getUserPrincipal().getName());
         }
-        return this.repository.findByUsername(request.getUserPrincipal().getName());
+        return user;
     }
 
     /**
