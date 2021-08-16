@@ -5,7 +5,6 @@
 package com.netcraker.config;
 
 import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,8 +29,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     /**
      * DataSource field.
      */
-    @Autowired
-    private DataSource datasource;
+    private final DataSource datasource;
+
+    /**
+     * Dependency injection through the constructor.
+     *
+     * @param datasource Data Source
+     */
+    WebSecurityConfig(final DataSource datasource) {
+        this.datasource = datasource;
+    }
 
     // @checkstyle DesignForExtensionCheck (4 lines) The method is not intended to be shared
     @Bean

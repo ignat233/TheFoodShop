@@ -4,9 +4,12 @@
 
 package com.netcraker.services;
 
+import com.netcraker.model.Order;
 import com.netcraker.model.Product;
+import com.netcraker.model.ProductQuantity;
 import com.netcraker.repository.ProductRepository;
 import com.netcraker.services.method.FindAll;
+import java.util.Set;
 import org.springframework.stereotype.Service;
 
 /**
@@ -70,6 +73,23 @@ public class ProductService extends FindAll<Product, ProductRepository> {
             edit = true;
         }
         return edit;
+    }
+
+    /**
+     * Filling an order with products.
+     *
+     * @param order Order
+     */
+    public void fillProductForOrder(final Order order) {
+        final Set<ProductQuantity> products = order.getProducts();
+        //@checkstyle LocalFinalVariableNameCheck (2 lines)
+        for (
+            final ProductQuantity productQuantity : products) {
+            productQuantity.setOrder(order);
+            productQuantity.setProduct(this.repository
+                .findByName(productQuantity.getProduct().getName())
+            );
+        }
     }
 
 }

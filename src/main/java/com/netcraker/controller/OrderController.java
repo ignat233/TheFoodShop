@@ -8,7 +8,6 @@ import com.netcraker.model.Order;
 import com.netcraker.services.OrderService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,20 +26,27 @@ public class OrderController {
     /**
      * OrderService field.
      */
-    @Autowired
-    private OrderService service;
+    private final OrderService service;
+
+    /**
+     * Dependency injection through the constructor.
+     *
+     * @param service OrderService
+     */
+    OrderController(final OrderService service) {
+        this.service = service;
+    }
 
     /**
      * Ordering.
      *
      * @param order Order
-     * @param request Request
      */
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/addOrder")
     @ResponseBody
-    public void addOrder(@RequestBody final Order order, final HttpServletRequest request) {
-        this.service.saveOrder(order, request);
+    public void addOrder(@RequestBody final Order order) {
+        this.service.saveOrder(order);
     }
 
     /**
